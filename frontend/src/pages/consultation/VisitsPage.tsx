@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
@@ -10,18 +6,6 @@ import { getFieldErrors, getErrorMessage } from '@/api/client'
 import { miscApi } from '@/api/misc.api'
 import { visitApi, type VisitInput } from '@/api/visit.api'
 import { IntakeModal } from '@/components/modules/clinical/IntakeModal'
-<<<<<<< HEAD
-=======
-=======
-import { useMemo, useState, type FormEvent } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Stethoscope } from 'lucide-react'
-import { getFieldErrors, getErrorMessage } from '@/api/client'
-import { miscApi } from '@/api/misc.api'
-import { visitApi, type VisitInput } from '@/api/visit.api'
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 import { PatientPicker } from '@/components/modules/clinical/PatientPicker'
 import { VISIT_STATUS_FILTER_OPTIONS, VISIT_TYPE_OPTIONS } from '@/components/modules/clinical/constants'
 import { Alert } from '@/components/ui/Alert'
@@ -59,10 +43,6 @@ const columns: Column<Visit>[] = [
       </span>
     ),
   },
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   { key: 'doctor', header: 'Doctor', hideBelow: 'md', render: (row) => row.doctor?.name ?? <span className="text-muted-foreground">Unassigned</span> },
   { key: 'visit_date', header: 'Date', hideBelow: 'sm', render: (row) => formatDate(row.visit_date) },
   {
@@ -72,14 +52,6 @@ const columns: Column<Visit>[] = [
     render: (row) => <StatusBadge status={row.priority} />,
   },
   {
-<<<<<<< HEAD
-=======
-=======
-  { key: 'doctor', header: 'Doctor', hideBelow: 'md', render: (row) => row.doctor.name },
-  { key: 'visit_date', header: 'Date', hideBelow: 'sm', render: (row) => formatDate(row.visit_date) },
-  {
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     key: 'diagnosis',
     header: 'Diagnosis',
     hideBelow: 'lg',
@@ -226,10 +198,6 @@ function NewVisitModal({ open, onClose }: NewVisitModalProps) {
 
 export default function VisitsPage() {
   const navigate = useNavigate()
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   const [searchParams, setSearchParams] = useSearchParams()
   const { hasPermission, hasRole, user } = useAuth()
   const { setPage, resetPage, query } = usePagination()
@@ -253,19 +221,6 @@ export default function VisitsPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams])
 
-<<<<<<< HEAD
-=======
-=======
-  const { hasPermission } = useAuth()
-  const { setPage, resetPage, query } = usePagination()
-  const [search, setSearch] = useState('')
-  const [status, setStatus] = useState('')
-  const [date, setDate] = useState('')
-  const [modalOpen, setModalOpen] = useState(false)
-  const debouncedSearch = useDebounce(search, 350)
-
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   const params = useMemo(
     () => ({
       ...query,
@@ -283,16 +238,8 @@ export default function VisitsPage() {
   })
 
   const canCreate = hasPermission('consultation.create')
-<<<<<<< HEAD
   const canIntake = hasPermission('patients.create') || hasRole('patient')
   const intakePatientId = hasRole('patient') && !hasPermission('patients.create') ? (user?.patient_id ?? undefined) : undefined
-=======
-<<<<<<< HEAD
-  const canIntake = hasPermission('patients.create') || hasRole('patient')
-  const intakePatientId = hasRole('patient') && !hasPermission('patients.create') ? (user?.patient_id ?? undefined) : undefined
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
   return (
     <div className="space-y-6">
@@ -300,10 +247,6 @@ export default function VisitsPage() {
         title="Consultations"
         subtitle="Track every visit from intake to completion"
         actions={
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
           <span className="flex flex-wrap items-center gap-2.5">
             {canIntake && (
               <Button variant="outline" icon={<ClipboardList size={16} />} onClick={() => setIntakeOpen(true)}>
@@ -316,16 +259,6 @@ export default function VisitsPage() {
               </Button>
             ) : undefined}
           </span>
-<<<<<<< HEAD
-=======
-=======
-          canCreate ? (
-            <Button icon={<Stethoscope size={16} />} onClick={() => setModalOpen(true)}>
-              New Consultation
-            </Button>
-          ) : undefined
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         }
       />
 
@@ -381,14 +314,7 @@ export default function VisitsPage() {
       {data && <Pagination meta={data.meta} onPageChange={setPage} disabled={isFetching} />}
 
       <NewVisitModal open={modalOpen} onClose={() => setModalOpen(false)} />
-<<<<<<< HEAD
       <IntakeModal open={intakeOpen} onClose={() => setIntakeOpen(false)} patientId={intakePatientId} />
-=======
-<<<<<<< HEAD
-      <IntakeModal open={intakeOpen} onClose={() => setIntakeOpen(false)} patientId={intakePatientId} />
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     </div>
   )
 }

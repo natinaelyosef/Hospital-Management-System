@@ -1,20 +1,9 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
-<<<<<<< HEAD
 import { ArrowLeft, Bed, CalendarClock, Download, Stethoscope, UserRound } from 'lucide-react'
 import { wardApi } from '@/api/ward.api'
 import { downloadBlob } from '@/utils/download'
-=======
-<<<<<<< HEAD
-import { ArrowLeft, Bed, CalendarClock, Download, Stethoscope, UserRound } from 'lucide-react'
-import { wardApi } from '@/api/ward.api'
-import { downloadBlob } from '@/utils/download'
-=======
-import { ArrowLeft, Bed, CalendarClock, Stethoscope, UserRound } from 'lucide-react'
-import { wardApi } from '@/api/ward.api'
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 import { Alert } from '@/components/ui/Alert'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
@@ -47,10 +36,6 @@ export default function AdmissionDetailPage() {
   const admissionId = Number(id)
   const [transferOpen, setTransferOpen] = useState(false)
   const [dischargeOpen, setDischargeOpen] = useState(false)
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   const [downloading, setDownloading] = useState(false)
 
   const downloadPdf = async () => {
@@ -62,11 +47,6 @@ export default function AdmissionDetailPage() {
       setDownloading(false)
     }
   }
-<<<<<<< HEAD
-=======
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
   const admission = useQuery({
     queryKey: ['admission', admissionId],
@@ -126,18 +106,9 @@ export default function AdmissionDetailPage() {
                 Discharge
               </Button>
             )}
-<<<<<<< HEAD
             <Button variant="outline" icon={<Download size={15} />} loading={downloading} onClick={() => void downloadPdf()}>
               Summary PDF
             </Button>
-=======
-<<<<<<< HEAD
-            <Button variant="outline" icon={<Download size={15} />} loading={downloading} onClick={() => void downloadPdf()}>
-              Summary PDF
-            </Button>
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
           </div>
         }
       />

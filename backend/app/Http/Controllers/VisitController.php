@@ -4,45 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Transformers\Transform;
 use App\Models\Appointment;
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 use App\Models\Department;
 use App\Models\Doctor;
 use App\Models\MedicalNote;
 use App\Models\Patient;
-<<<<<<< HEAD
-=======
-=======
-use App\Models\Doctor;
-use App\Models\MedicalNote;
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 use App\Models\Visit;
 use App\Models\VitalSign;
 use App\Support\AuditLogger;
 use App\Support\GeneratesSequentialNumber;
-<<<<<<< HEAD
 use App\Support\VisitWorkflow;
-=======
-<<<<<<< HEAD
-use App\Support\VisitWorkflow;
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
-<<<<<<< HEAD
 use InvalidArgumentException;
-=======
-<<<<<<< HEAD
-use InvalidArgumentException;
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
 class VisitController extends Controller
 {
@@ -73,10 +48,6 @@ class VisitController extends Controller
             $query->where('status', $request->input('status'));
         }
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         if ($request->filled('department_id')) {
             $query->where('department_id', (int) $request->input('department_id'));
         }
@@ -85,11 +56,6 @@ class VisitController extends Controller
             $query->where('priority', $request->input('priority'));
         }
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         if ($request->filled('search')) {
             $search = trim((string) $request->input('search'));
 
@@ -118,30 +84,16 @@ class VisitController extends Controller
         );
     }
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     /**
      * Direct clinical creation (doctor/admin): opens straight at the
      * consultation stage with a creation history entry.
      */
     public function store(Request $request, VisitWorkflow $flow): JsonResponse
-<<<<<<< HEAD
-=======
-=======
-    public function store(Request $request): JsonResponse
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     {
         $data = $request->validate([
             'patient_id' => ['required', 'exists:patients,id'],
             'doctor_id' => ['nullable', 'exists:doctors,id'],
             'appointment_id' => ['nullable', 'exists:appointments,id'],
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             'department_id' => ['nullable', 'exists:departments,id'],
             'visit_date' => ['nullable', 'date'],
             'type' => ['required', Rule::in(self::TYPES)],
@@ -157,15 +109,6 @@ class VisitController extends Controller
             'treatment' => ['nullable', 'string'],
             'medical_notes' => ['nullable', 'string'],
             'follow_up_date' => ['nullable', 'date'],
-<<<<<<< HEAD
-=======
-=======
-            'visit_date' => ['required', 'date'],
-            'type' => ['required', Rule::in(self::TYPES)],
-            'chief_complaint' => ['nullable', 'string'],
-            'symptoms' => ['nullable', 'string'],
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         ]);
 
         $doctorId = $data['doctor_id'] ?? $request->user()?->doctor?->id;
@@ -174,24 +117,12 @@ class VisitController extends Controller
             return response()->json(['message' => 'Doctor is required to create a visit.'], 422);
         }
 
-<<<<<<< HEAD
         $visit = DB::transaction(function () use ($data, $request, $doctorId, $flow) {
-=======
-<<<<<<< HEAD
-        $visit = DB::transaction(function () use ($data, $request, $doctorId, $flow) {
-=======
-        $visit = DB::transaction(function () use ($data, $request, $doctorId) {
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             $visit = Visit::create([
                 'visit_number' => $this->next('VST', 'visits', 'visit_number'),
                 'patient_id' => $data['patient_id'],
                 'doctor_id' => $doctorId,
                 'appointment_id' => $data['appointment_id'] ?? null,
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
                 'department_id' => $data['department_id'] ?? Doctor::whereKey($doctorId)->value('department_id'),
                 'visit_date' => $data['visit_date'] ?? today()->toDateString(),
                 'type' => $data['type'],
@@ -213,20 +144,6 @@ class VisitController extends Controller
 
             $flow->logCreation($visit, $request->user(), 'Direct consultation opened.');
 
-<<<<<<< HEAD
-=======
-=======
-                'department_id' => Doctor::whereKey($doctorId)->value('department_id'),
-                'visit_date' => $data['visit_date'],
-                'type' => $data['type'],
-                'chief_complaint' => $data['chief_complaint'] ?? null,
-                'symptoms' => $data['symptoms'] ?? null,
-                'status' => 'in_progress',
-                'created_by' => $request->user()?->id,
-            ]);
-
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             if ($visit->appointment_id) {
                 $appointment = Appointment::find($visit->appointment_id);
 
@@ -240,10 +157,6 @@ class VisitController extends Controller
             return $visit;
         });
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         return $this->ok(Transform::visit($visit->load(['patient', 'doctor.user', 'doctor.department', 'department'])));
     }
 
@@ -388,20 +301,10 @@ class VisitController extends Controller
         $visit->fill($data)->save();
 
         AuditLogger::log('updated', "Intake for visit {$visit->visit_number} corrected", $visit, $old, $visit->only(array_keys($data)));
-<<<<<<< HEAD
-=======
-=======
-        AuditLogger::log('created', "Visit {$visit->visit_number} created", $visit);
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
         return $this->ok(Transform::visit($visit->load(['patient', 'doctor.user', 'doctor.department', 'department'])));
     }
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     /**
      * Reception routes the case to a department (spec §3), optionally naming
      * a doctor. Re-referring moves the case (department correction).
@@ -589,11 +492,6 @@ class VisitController extends Controller
         return $this->ok($flow->timeline($visit));
     }
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     public function show(Request $request, Visit $visit): JsonResponse
     {
         if ($denied = $this->denyForeignPatient($request, $visit)) {
@@ -623,21 +521,12 @@ class VisitController extends Controller
         $data = $request->validate([
             'chief_complaint' => ['nullable', 'string'],
             'symptoms' => ['nullable', 'string'],
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             'symptom_duration' => ['nullable', 'string', 'max:100'],
             'severity' => ['nullable', Rule::in(Visit::SEVERITIES)],
             'previous_conditions' => ['nullable', 'string'],
             'current_medications' => ['nullable', 'string'],
             'intake_notes' => ['nullable', 'string'],
             'priority' => ['sometimes', Rule::in(Visit::PRIORITIES)],
-<<<<<<< HEAD
-=======
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             'diagnosis' => ['nullable', 'string'],
             'treatment' => ['nullable', 'string'],
             'medical_notes' => ['nullable', 'string'],
@@ -654,24 +543,12 @@ class VisitController extends Controller
         return $this->ok(Transform::visit($visit->load(['patient', 'doctor.user', 'doctor.department', 'department'])));
     }
 
-<<<<<<< HEAD
     public function complete(Request $request, Visit $visit, VisitWorkflow $flow): JsonResponse
-=======
-<<<<<<< HEAD
-    public function complete(Request $request, Visit $visit, VisitWorkflow $flow): JsonResponse
-=======
-    public function complete(Request $request, Visit $visit): JsonResponse
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     {
         if ($denied = $this->denyForeignPatient($request, $visit)) {
             return $denied;
         }
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         $data = $request->validate([
             'diagnosis' => ['nullable', 'string'],
             'note' => ['nullable', 'string', 'max:500'],
@@ -694,23 +571,6 @@ class VisitController extends Controller
         } catch (InvalidArgumentException $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
-<<<<<<< HEAD
-=======
-=======
-        $old = $visit->only(['status', 'diagnosis']);
-
-        if ($request->filled('diagnosis')) {
-            $visit->diagnosis = $request->input('diagnosis');
-        }
-
-        if (! trim((string) ($visit->diagnosis ?? ''))) {
-            return response()->json(['message' => 'Diagnosis is required to complete a visit'], 422);
-        }
-
-        $visit->status = 'completed';
-        $visit->save();
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
         if ($visit->appointment_id) {
             $appointment = Appointment::find($visit->appointment_id);
@@ -721,14 +581,6 @@ class VisitController extends Controller
             }
         }
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-        AuditLogger::log('completed', "Visit {$visit->visit_number} completed", $visit, $old, $visit->only(['status', 'diagnosis']));
-
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         return $this->ok(Transform::visit($visit->load(['patient', 'doctor.user', 'doctor.department', 'department'])));
     }
 
@@ -831,10 +683,6 @@ class VisitController extends Controller
     }
 
     /**
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
      * Intake is staff work (patients.create) except that a patient-portal
      * user may record their own complaint.
      */
@@ -872,26 +720,6 @@ class VisitController extends Controller
         }
 
         return null;
-<<<<<<< HEAD
-=======
-=======
-     * Id of the patients row owned by the caller (null for staff accounts).
-     */
-    private function portalPatientId(Request $request): ?int
-    {
-        $user = $request->user();
-
-        if (! $user) {
-            return null;
-        }
-
-        if ($this->isPatientPortal($request)) {
-            return (int) $user->patient_id;
-        }
-
-        return $user->patient?->id;
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     }
 
     /**

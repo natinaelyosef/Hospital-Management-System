@@ -5,18 +5,9 @@ Base URL: `http://127.0.0.1:8000/api` (frontend dev server proxies `/api` here).
 ## Conventions
 
 - All authenticated endpoints require header `Authorization: Bearer <token>` (Laravel Sanctum).
-<<<<<<< HEAD
 - Endpoints are authorized **server-side** by the `permission` middleware (`App\Http\Middleware\EnsurePermission`): the caller must hold at least one of the permissions listed on the endpoint. A missing permission returns `403`.
 - The `super_admin` role bypasses every permission gate. The operational `admin` role holds the same permissions **except** `roles.manage`, so only a Super Administrator can rewrite the role/permission architecture. Only a Super Administrator may create, suspend, delete or demote another Super Administrator.
 - Account lifecycle: `status` is one of `active | suspended | inactive | pending`. Only `active` accounts may sign in. Deleting an account **soft-deletes** it (`deleted_at`, `deleted_by`, `deletion_reason`) — clinical and financial records are never removed with it.
-=======
-<<<<<<< HEAD
-- Endpoints are authorized **server-side** by the `permission` middleware (`App\Http\Middleware\EnsurePermission`): the caller must hold at least one of the permissions listed on the endpoint. A missing permission returns `403`.
-- The `super_admin` role bypasses every permission gate. The operational `admin` role holds the same permissions **except** `roles.manage`, so only a Super Administrator can rewrite the role/permission architecture. Only a Super Administrator may create, suspend, delete or demote another Super Administrator.
-- Account lifecycle: `status` is one of `active | suspended | inactive | pending`. Only `active` accounts may sign in. Deleting an account **soft-deletes** it (`deleted_at`, `deleted_by`, `deletion_reason`) — clinical and financial records are never removed with it.
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 - JSON only. Every success payload wraps the primary payload in `data`.
   - Single resource: `{ "data": { ... } }`
   - List (paginated): `{ "data": [ ... ], "meta": { "current_page": 1, "last_page": 3, "per_page": 15, "total": 42 } }`
@@ -24,23 +15,12 @@ Base URL: `http://127.0.0.1:8000/api` (frontend dev server proxies `/api` here).
 - Errors: `422` `{ "message": "...", "errors": { "field": ["..."] } }`; `401` `{ "message": "Unauthenticated." }`; `403` `{ "message": "This action is unauthorized." }`; `404` `{ "message": "Not found." }`.
 - Pagination query params: `?page=1&per_page=15`, search `?search=`, plus module-specific filters (documented per module).
 - Timestamps are ISO-8601 strings (`YYYY-MM-DDTHH:mm:ss.000000Z`); dates are `YYYY-MM-DD`.
-<<<<<<< HEAD
 - **Patient-portal scoping.** A signed-in user whose account is linked to a `patients` row (a Patient-portal user) only ever sees their own records, even when a read permission is granted. List endpoints filter to `patients.id`, detail/PDF endpoints return `403` for another patient's record. Resolved in `App\Http\Controllers\Controller::portalPatientId()` (the `User::patient()` hasOne relation — `users` has no `patient_id` column), backed by `scopeToSelf()` and `denyOtherPatient()`.
-=======
-<<<<<<< HEAD
-- **Patient-portal scoping.** A signed-in user whose account is linked to a `patients` row (a Patient-portal user) only ever sees their own records, even when a read permission is granted. List endpoints filter to `patients.id`, detail/PDF endpoints return `403` for another patient's record. Resolved in `App\Http\Controllers\Controller::portalPatientId()` (the `User::patient()` hasOne relation — `users` has no `patient_id` column), backed by `scopeToSelf()` and `denyOtherPatient()`.
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
 ## Auth (`/api/auth`)
 
 | Method | Path | Body | Response `data` |
 |---|---|---|---|
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 | POST | `/auth/login` | `{ email, password, portal }` | `{ token, user, portal }` |
 | POST | `/auth/portal` | `{ email }` | `{ portal: "patient"\|"staff"\|null, exists }` |
 | POST | `/auth/register` | `{ first_name, last_name, gender, date_of_birth, phone, email, address?, emergency_contact_name, emergency_contact_phone, password, password_confirmation, chief_complaint, symptoms?, symptom_duration?, severity?, previous_conditions?, current_medications? }` | `{ token, user, patient_number, visit, suggested_departments }` (201) |
@@ -99,17 +79,6 @@ Invitations are **staff-only**: `POST /users/invite` rejects the `patient` role 
 
 No patient-identifying data is ever exposed here. This powers the public homepage at `/`.
 
-<<<<<<< HEAD
-=======
-=======
-| POST | `/auth/login` | `{ email, password }` | `{ token, user }` |
-| POST | `/auth/logout` | – | `{ message }` |
-| GET | `/auth/me` | – | `{ user }` |
-| PUT | `/auth/profile` | `{ name?, phone?, email? }` | `{ user }` |
-| POST | `/auth/password` | `{ current_password, password, password_confirmation }` | `{ message }` |
-
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 ### User object
 
 ```ts
@@ -118,21 +87,11 @@ No patient-identifying data is ever exposed here. This powers the public homepag
   role: { id: number; name: string; label: string; permissions: string[] };
   patient_id: number | null;   // set when the user is a Patient-portal user
   doctor_id: number | null;    // set when the user is a Doctor
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   status: 'active' | 'suspended' | 'inactive' | 'pending';
   is_active: boolean;          // mirror of status === 'active'
   suspended_at: string | null; suspension_reason: string | null;
   invited_at: string | null;   // set when the account arrived via invitation
   last_login_at: string | null; created_at: string;
-<<<<<<< HEAD
-=======
-=======
-  is_active: boolean; last_login_at: string | null; created_at: string;
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 }
 ```
 
@@ -164,20 +123,11 @@ Permission strings are dot-notated, e.g. `patients.view`, `appointments.create`,
 - `GET /audit-logs` (perm `audit.view`) → paginated `{ id, user, action, description, auditable_type, auditable_id, ip_address, created_at }`, filters `?search=&action=`
 - `GET /reports/...`, `GET /settings`, `PUT /settings` — see Reports/Settings below.
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 ## Global search (`/api/search`)
 
 - `GET /search?q=min3chars&scope=patients,doctors,appointments,prescriptions,lab_requests,admissions,invoices` (scope optional)
 - → `{ data: { patients: [{id,title,subtitle,url}], doctors: [...], ... } }` (max 6 hits per group, patient-portal users scoped to self)
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 ## Patients (`/api/patients`, perm `patients.*`)
 
 Query: `?search=` (name / patient number / phone), `?gender=`, `?blood_group=`.
@@ -195,14 +145,7 @@ interface Patient {
 ```
 
 - `GET /patients`, `POST /patients`, `GET /patients/{id}`, `PUT /patients/{id}`, `DELETE /patients/{id}`
-<<<<<<< HEAD
 - Duplicate guard: `POST /patients` and `POST /auth/register` reject an already-used phone number (`422` with the existing `patient_number`); patient emails are unique.
-=======
-<<<<<<< HEAD
-- Duplicate guard: `POST /patients` and `POST /auth/register` reject an already-used phone number (`422` with the existing `patient_number`); patient emails are unique.
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 - `GET /patients/{id}/documents`, `POST /patients/{id}/documents` (multipart `file`), `DELETE /documents/{id}`
 - `GET /patients/{id}/visits`, `GET /patients/{id}/appointments`, `GET /patients/{id}/prescriptions`, `GET /patients/{id}/invoices` → paginated
 - `POST /patients/search` body `{ search }` → `{ data: Patient[] }` (limit 10, for pickers)
@@ -253,10 +196,6 @@ interface Appointment {
 
 ## Consultation / Visits (`/api/visits`, perm `consultation.*`)
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 Visits are the workflow encounter: one active case per patient, moved forward by
 handoffs. Every move writes an immutable `visit_transitions` row (the Patient
 Journey timeline), an audit entry and a notification to the next owner.
@@ -277,19 +216,6 @@ interface Visit {
     |"pharmacy_processing"|"payment_required"|"payment_approved"
     |"medication_dispensed"|"visit_completed"|"cancelled";
   referred_by: number|null; referred_at: string|null; created_at: string;
-<<<<<<< HEAD
-=======
-=======
-```ts
-interface Visit {
-  id: number; visit_number: string; patient: Patient; doctor: Doctor;
-  appointment_id: number|null; department_id: number|null; visit_date: string;
-  type: "opd"|"emergency"|"follow_up";
-  chief_complaint: string|null; symptoms: string|null; diagnosis: string|null;
-  treatment: string|null; medical_notes: string|null; follow_up_date: string|null;
-  status: "in_progress"|"completed"; created_at: string;
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   vital_signs: VitalSign[]; prescriptions: Prescription[]; lab_requests: LabRequest[];
   medical_notes: MedicalNote[];
 }
@@ -301,10 +227,6 @@ interface VitalSign {
   notes: string|null; recorded_by_name: string;
 }
 interface MedicalNote { id: number; note_type: "progress"|"nursing"|"general"; content: string; author_name: string; created_at: string }
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 interface TimelineEntry { id: number; from: string|null; to: string; label: string; actor: string|null; note: string|null; at: string|null }
 interface WorkflowTask { key: string; label: string; count: number; url: string }
 ```
@@ -318,23 +240,10 @@ interface WorkflowTask { key: string; label: string; count: number; url: string 
 - `POST /visits/{id}/start-consultation`, `POST /visits/{id}/lab-reviewed` (perm `consultation.edit`, assigned doctor or admin override). `lab-reviewed` returns the case straight to `in_consultation` so the doctor reviews results and prescribes (or orders a second lab round) in one click — no forced re-open.
 - `POST /visits/{id}/complete` (diagnosis required) → `visit_completed`; `POST /visits/{id}/cancel`.
 - `GET /visits/{id}/timeline` (perm `consultation.view,patients.view,patients.edit`; patients see own) → `TimelineEntry[]` oldest first.
-<<<<<<< HEAD
-=======
-=======
-```
-
-- `GET /visits` (`?patient_id=&doctor_id=&date=&status=&search=`), `POST /visits`, `GET /visits/{id}`, `PUT /visits/{id}`
-- `POST /visits/{id}/complete`
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 - `GET /visits/{id}/vitals`, `POST /visits/{id}/vitals` — also `POST /patients/{id}/vitals` for nurses (no visit yet)
 - `GET /patients/{id}/vitals` → paginated history
 - `POST /visits/{id}/notes`, `GET /visits/{id}/notes`
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 Automatic downstream moves (notification included): lab request created → `lab_requested` (explicit edge, so a second round from `lab_completed` or `waiting_for_doctor` re-enters the lab instead of being dropped); lab started → `lab_in_progress`; results completed → `lab_completed`; lab cancelled → back to `waiting_for_doctor`; prescription created → `prescription_created`; bill prepared → `pharmacy_processing` **then** `payment_required` (in that order — the monotonic advance would otherwise swallow the pharmacy stage); zero-total bills are approved on the spot → `payment_approved`; cash payment recorded settles the invoice but does **not** advance the case; `POST /invoices/{id}/approve` → `payment_approved`; prescription dispensed → `medication_dispensed`.
 
 Workflow utilities (any signed-in user; buckets are role-aware):
@@ -342,11 +251,6 @@ Workflow utilities (any signed-in user; buckets are role-aware):
 - `GET /workflow/summary` → `WorkflowTask[]` (counts + deep links, e.g. receptionist routing/referred, nurse triage, doctor queue/review, lab pending/urgent, pharmacy new/preparing/unpaid, accountant required/paid-today, patient current visit/bills).
 - `GET /departments/suggest?complaint=` (perm `departments.view,patients.create`) → top-3 `{ id, name, code, description, score }`; suggestions only, a human confirms.
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 ## Prescriptions (`/api/prescriptions`, perm `prescriptions.*`)
 
 ```ts
@@ -360,10 +264,6 @@ interface Prescription {
 }
 ```
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 - `GET /prescriptions` (`?status=&search=&patient_id=&visit_id=&doctor_id=`), `POST /prescriptions`, `GET /prescriptions/{id}`
 - `PUT /prescriptions/{id}/status` body `{ status }` (`pending|processing|dispensed|cancelled` — `dispensed` decrements pharmacy stock; refused with `422` while the linked visit has an unpaid/partial invoice **or no paid invoice yet** — pharmacist must prepare the bill first, accountant must approve payment)
 - `POST /prescriptions/{id}/invoice` (perm `prescriptions.create,prescriptions.dispense,billing.invoice.create`) body `{ discount?, tax?, notes? }` → pharmacist prepares the bill document (medicine lines at current `selling_price` + unbilled lab tests on the same visit) and stamps `prescription_id` on the invoice; idempotent — returns the open (`unpaid`/`partial`) invoice for the prescription or its visit when one exists; zero-total bills are settled and approved immediately. Moves the visit to `pharmacy_processing` → `payment_required` (straight to `payment_approved` when the total is 0).
@@ -371,16 +271,6 @@ interface Prescription {
 - `GET /prescriptions/{id}/pdf` → prescription PDF: the medicines list **with unit price, line total and subtotal**, plus the full bill for the accountant (sub total, discount, tax, total, paid, balance due) when one exists. This is the document the pharmacist hands over.
 
 Create body: `{ patient_id, visit_id?, diagnosis?, notes?, items: [{ medicine_id, dosage, frequency, duration, quantity, instructions? }] }` — `visit_id` must match `patient_id`, visit must be `in_consultation|lab_completed|waiting_for_doctor`, stock is checked upfront. Prescription items expose `{ unit_price, line_total }` (live catalogue price) plus `estimated_total`. The payload also carries the payment gate so the pharmacy UI can disable **Dispense** with a reason instead of returning a 422: `{ payment_approved, outstanding_invoice: { id, invoice_number, balance, status }|null, approved_invoice: { id, invoice_number, approved_at, approved_by_name }|null }`. Dispensing requires an approved invoice linked by `prescription_id` (or, for bills predating that link, by `visit_id`) — a walk-in prescription with no bill is blocked too.
-<<<<<<< HEAD
-=======
-=======
-- `GET /prescriptions` (`?status=&search=&patient_id=&doctor_id=`), `POST /prescriptions`, `GET /prescriptions/{id}`
-- `PUT /prescriptions/{id}/status` body `{ status }` (`pending|processing|dispensed|cancelled` — `dispensed` decrements pharmacy stock)
-- `GET /prescriptions/pending` → pharmacy queue
-
-Create body: `{ patient_id, visit_id?, diagnosis?, notes?, items: [{ medicine_id, dosage, frequency, duration, quantity, instructions? }] }`
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
 ## Pharmacy (`/api/pharmacy`)
 
@@ -409,15 +299,7 @@ Types: `purchase | dispense | sale | adjustment | expired | return`.
 ## Laboratory (`/api/laboratory`)
 
 - `GET/POST/PUT/DELETE /lab-tests` (perm `lab.*`) → `{ id, name, code, category, price, description, is_active }`
-<<<<<<< HEAD
 - `GET /lab-requests` (`?status=&search=&date=&patient_id=&visit_id=`), `POST /lab-requests` body `{ patient_id, visit_id?, doctor_id?, priority, notes?, test_ids: number[] }` — when `visit_id` is set, `patient_id` must match the visit and the visit must be `in_consultation|lab_completed`. Results expose `test_price` + request `estimated_cost`.
-=======
-<<<<<<< HEAD
-- `GET /lab-requests` (`?status=&search=&date=&patient_id=&visit_id=`), `POST /lab-requests` body `{ patient_id, visit_id?, doctor_id?, priority, notes?, test_ids: number[] }` — when `visit_id` is set, `patient_id` must match the visit and the visit must be `in_consultation|lab_completed`. Results expose `test_price` + request `estimated_cost`.
-=======
-- `GET /lab-requests` (`?status=&search=&date=&patient_id=`), `POST /lab-requests` body `{ patient_id, visit_id?, doctor_id?, priority, notes?, test_ids: number[] }`
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
 ```ts
 interface LabRequest {
@@ -432,14 +314,7 @@ interface LabRequest {
 ```
 
 - `GET /lab-requests/{id}`, `POST /lab-requests/{id}/start`, `POST /lab-requests/{id}/results` body `{ results: [{ lab_test_id, result_value, reference_range?, unit?, notes? }] }` (marks completed), `POST /lab-requests/{id}/cancel`
-<<<<<<< HEAD
 - `GET /lab-requests/{id}/pdf` → lab report PDF download
-=======
-<<<<<<< HEAD
-- `GET /lab-requests/{id}/pdf` → lab report PDF download
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
 ## Wards / Inpatient (`/api/wards`)
 
@@ -464,28 +339,13 @@ interface Admission {
 - `POST /admissions` body `{ patient_id, ward_id, room_id, bed_id, consultant_id?, diagnosis? }`
 - `GET /admissions/{id}`, `PUT /admissions/{id}/transfer` body `{ ward_id, room_id, bed_id }`
 - `PUT /admissions/{id}/discharge` body `{ outcome, discharge_summary? }`
-<<<<<<< HEAD
 - `GET /admissions/{id}/pdf` → discharge summary PDF download
-=======
-<<<<<<< HEAD
-- `GET /admissions/{id}/pdf` → discharge summary PDF download
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 - `GET /wards/beds/availability` → `{ total, occupied, available }`
 
 ## Billing (`/api/billing`)
 
 - `GET/POST/PUT/DELETE /services` (perm `billing.*`) → `{ id, name, code, category, price, is_active }`
-<<<<<<< HEAD
 - `GET /invoices` (`?status=&search=&date=&patient_id=&visit_id=`) — invoice payload now includes `patient_id`, `visit_id`, `prescription_id`, `admission_id`. Zero-total invoices are created as `paid` **and approved**, so pharmacy never stalls on a free bill.
-=======
-<<<<<<< HEAD
-- `GET /invoices` (`?status=&search=&date=&patient_id=&visit_id=`) — invoice payload now includes `patient_id`, `visit_id`, `prescription_id`, `admission_id`. Zero-total invoices are created as `paid` **and approved**, so pharmacy never stalls on a free bill.
-=======
-- `GET /invoices` (`?status=&search=&date=&patient_id=`)
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
 ```ts
 interface Invoice {
@@ -493,19 +353,10 @@ interface Invoice {
   tax: number; total: number; paid_amount: number; balance: number;
   status: "unpaid"|"partial"|"paid"|"cancelled";
   insurance_covered: number; notes: string|null; issued_by_name: string;
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   /** Approval is a separate, explicit accountant decision from recording cash. */
   is_approved: boolean; approved_by_name: string|null;
   approved_at: string|null; approval_notes: string|null;
   paid_at?: string|null;
-<<<<<<< HEAD
-=======
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   created_at: string; items: InvoiceItem[];
   payments: Payment[];
 }
@@ -514,17 +365,8 @@ interface Payment { id: number; payment_number: string; amount: number; method: 
 ```
 
 - `POST /invoices` body `{ patient_id, visit_id?, admission_id?, discount?, tax?, notes?, items: [{ service_id?, description, item_type, quantity, unit_price }] }`
-<<<<<<< HEAD
 - `GET /invoices/{id}`, `PUT /invoices/{id}`, `POST /invoices/{id}/payments` body `{ amount, method, reference? }` — recording cash settles the invoice but does **not** release the medication.
 - `POST /invoices/{id}/approve` (perm `billing.payment.approve`, accountant only) body `{ notes? }` — the explicit approval gate. Requires a zero balance; 422 while anything is outstanding or if already approved. Advances the linked case to `payment_approved`.
-=======
-<<<<<<< HEAD
-- `GET /invoices/{id}`, `PUT /invoices/{id}`, `POST /invoices/{id}/payments` body `{ amount, method, reference? }` — recording cash settles the invoice but does **not** release the medication.
-- `POST /invoices/{id}/approve` (perm `billing.payment.approve`, accountant only) body `{ notes? }` — the explicit approval gate. Requires a zero balance; 422 while anything is outstanding or if already approved. Advances the linked case to `payment_approved`.
-=======
-- `GET /invoices/{id}`, `PUT /invoices/{id}`, `POST /invoices/{id}/payments` body `{ amount, method, reference? }`
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 - `GET /invoices/{id}/pdf` → PDF stream (browser download)
 - `GET /billing/summary` → `{ today_collected, month_collected, outstanding, invoices_today, payments_today }`
 
@@ -557,10 +399,6 @@ All accept `?from=YYYY-MM-DD&to=YYYY-MM-DD`:
 
 ## Users & roles (`/api/users`, perm `users.*` / `roles.manage`)
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 | Method | Path | Perm | Body |
 |---|---|---|---|
 | GET | `/users` | `users.view` | `?search=&role_id=&status=&sort=&direction=&page=&per_page=` |
@@ -606,13 +444,3 @@ Seeded by `backend/database/seeders/RolePermissionSeeder.php` and re-applied ide
 | `patient` | `dashboard.view`, `patients.view`, `appointments.view`, `prescriptions.view`, `lab.view`, `billing.view`, `consultation.view` — **every read is scoped to that patient's own records** |
 
 Demo logins (all password `password`): `admin@medicare.test` and `admin2@medicare.test` (both `super_admin`), `doctor@`, `nurse@`, `receptionist@`, `pharmacist@`, `lab@`, `accountant@`, `patient@medicare.test`.
-<<<<<<< HEAD
-=======
-=======
-- `GET /users` (`?search=&role_id=`) → `{ id, name, email, phone, role, is_active, last_login_at, created_at }`
-- `POST /users` `{ name, email, password, phone?, role_id, is_active? }`, `PUT /users/{id}`, `DELETE /users/{id}`
-- `GET /roles` → `{ id, name, label, description, permissions: string[], users_count }`
-- `POST /roles`, `PUT /roles/{id}`, `DELETE /roles/{id}` body `{ name, label, description?, permissions: string[] }`
-- `GET /permissions` → `{ data: { name, label, group }[] }`
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a

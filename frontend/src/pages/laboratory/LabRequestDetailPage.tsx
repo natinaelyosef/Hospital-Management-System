@@ -1,8 +1,4 @@
 import { useState } from 'react'
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { ArrowLeft, Ban, CircleCheck, Download, Play, Printer, Stethoscope } from 'lucide-react'
@@ -10,16 +6,6 @@ import { getErrorMessage } from '@/api/client'
 import { labApi } from '@/api/lab.api'
 import { downloadBlob } from '@/utils/download'
 import { formatCurrency } from '@/utils/format'
-<<<<<<< HEAD
-=======
-=======
-import { useNavigate, useParams } from 'react-router-dom'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { ArrowLeft, Ban, CircleCheck, Play, Printer } from 'lucide-react'
-import { getErrorMessage } from '@/api/client'
-import { labApi } from '@/api/lab.api'
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 import { Alert } from '@/components/ui/Alert'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
@@ -47,10 +33,6 @@ export default function LabRequestDetailPage() {
   const canProcess = hasPermission('lab.process')
   const requestId = Number(id)
   const [resultsOpen, setResultsOpen] = useState(false)
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   const [downloading, setDownloading] = useState(false)
 
   const downloadPdf = async () => {
@@ -64,11 +46,6 @@ export default function LabRequestDetailPage() {
       setDownloading(false)
     }
   }
-<<<<<<< HEAD
-=======
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
   const request = useQuery({
     queryKey: ['lab-request', requestId],
@@ -201,26 +178,13 @@ export default function LabRequestDetailPage() {
             <Button variant="outline" icon={<Printer size={15} />} onClick={() => window.print()}>
               Print
             </Button>
-<<<<<<< HEAD
             <Button variant="outline" icon={<Download size={15} />} loading={downloading} onClick={() => void downloadPdf()}>
               PDF
             </Button>
-=======
-<<<<<<< HEAD
-            <Button variant="outline" icon={<Download size={15} />} loading={downloading} onClick={() => void downloadPdf()}>
-              PDF
-            </Button>
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
           </div>
         }
       />
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
       {data.visit_id != null && (
         <Alert tone="info" title={`Linked case — results flow back to the doctor`}>
           <span className="flex flex-wrap items-center gap-2">
@@ -239,14 +203,6 @@ export default function LabRequestDetailPage() {
           This request is complete — {completedCount} of {data.results.length} tests verified
           {data.estimated_cost != null && data.estimated_cost > 0 ? ` · billing value ${formatCurrency(data.estimated_cost)}` : ''}.
           The doctor was notified and the case is ready for review. Use Print for a hard copy.
-<<<<<<< HEAD
-=======
-=======
-      {data.status === 'completed' && (
-        <Alert tone="success" title="All results are in">
-          This request is complete — {completedCount} of {data.results.length} tests verified. Use Print for a hard copy.
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         </Alert>
       )}
       {data.status === 'cancelled' && (

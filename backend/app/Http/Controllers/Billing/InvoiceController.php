@@ -9,14 +9,7 @@ use App\Models\Payment;
 use App\Models\Setting;
 use App\Support\AuditLogger;
 use App\Support\GeneratesSequentialNumber;
-<<<<<<< HEAD
 use App\Support\VisitWorkflow;
-=======
-<<<<<<< HEAD
-use App\Support\VisitWorkflow;
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -27,15 +20,7 @@ class InvoiceController extends Controller
 {
     use GeneratesSequentialNumber;
 
-<<<<<<< HEAD
     private const RELATIONS = ['patient', 'items', 'payments.receiver', 'issuer', 'approver'];
-=======
-<<<<<<< HEAD
-    private const RELATIONS = ['patient', 'items', 'payments.receiver', 'issuer', 'approver'];
-=======
-    private const RELATIONS = ['patient', 'items', 'payments.receiver', 'issuer'];
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
     public function index(Request $request): JsonResponse
     {
@@ -49,19 +34,10 @@ class InvoiceController extends Controller
             $query->where('patient_id', (int) $request->query('patient_id'));
         }
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         if ($request->filled('visit_id')) {
             $query->where('visit_id', (int) $request->query('visit_id'));
         }
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         if ($request->filled('date')) {
             $query->whereDate('created_at', $request->query('date'));
         }
@@ -111,16 +87,8 @@ class InvoiceController extends Controller
         [$rows, $subTotal] = $this->buildItems($data['items']);
 
         $invoice = DB::transaction(function () use ($data, $rows, $subTotal, $discount, $tax, $request) {
-<<<<<<< HEAD
             $total = round($subTotal - $discount + $tax, 2);
 
-=======
-<<<<<<< HEAD
-            $total = round($subTotal - $discount + $tax, 2);
-
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             $invoice = Invoice::create([
                 'invoice_number' => $this->next('INV', 'invoices', 'invoice_number'),
                 'patient_id' => $data['patient_id'],
@@ -129,15 +97,7 @@ class InvoiceController extends Controller
                 'sub_total' => $subTotal,
                 'discount' => $discount,
                 'tax' => $tax,
-<<<<<<< HEAD
                 'total' => max(0, $total),
-=======
-<<<<<<< HEAD
-                'total' => max(0, $total),
-=======
-                'total' => round($subTotal - $discount + $tax, 2),
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
                 'paid_amount' => 0,
                 'insurance_covered' => 0,
                 'status' => 'unpaid',
@@ -149,10 +109,6 @@ class InvoiceController extends Controller
                 $invoice->items()->create($row);
             }
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             // Zero-cost invoices are settled and approved on the spot: there is
             // no cash to verify, and downstream handoffs (pharmacy dispense)
             // must never stall on a 0-balance bill.
@@ -165,11 +121,6 @@ class InvoiceController extends Controller
                 $invoice->save();
             }
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             return $invoice;
         });
 
@@ -178,10 +129,6 @@ class InvoiceController extends Controller
             'total' => (float) $invoice->total,
         ]);
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         VisitWorkflow::advanceVisit(
             $invoice->visit_id,
             'payment_required',
@@ -207,16 +154,6 @@ class InvoiceController extends Controller
             return $denied;
         }
 
-<<<<<<< HEAD
-=======
-=======
-        return $this->ok(Transform::invoice($invoice->load(self::RELATIONS)));
-    }
-
-    public function show(Invoice $invoice): JsonResponse
-    {
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         $invoice->load(self::RELATIONS);
 
         return $this->ok(Transform::invoice($invoice));
@@ -345,10 +282,6 @@ class InvoiceController extends Controller
             'method' => $payment->method,
         ]);
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         // Recording the cash settles the invoice but does NOT release the
         // medication: the accountant still has to approve the payment.
         if ($invoice->status === 'paid') {
@@ -362,21 +295,12 @@ class InvoiceController extends Controller
             );
         }
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         return $this->ok([
             'invoice' => Transform::invoice($invoice->load(self::RELATIONS)),
             'payment' => Transform::payment($payment->load('receiver')),
         ]);
     }
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     /**
      * The accountant's explicit approval of a settled invoice. This is the
      * gate that lets the pharmacy dispense: recording the money and approving
@@ -437,13 +361,6 @@ class InvoiceController extends Controller
             return $denied;
         }
 
-<<<<<<< HEAD
-=======
-=======
-    public function pdf(Invoice $invoice)
-    {
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         $invoice->load(['patient', 'items', 'payments.receiver', 'issuer']);
 
         $settings = Setting::query()->pluck('value', 'key');

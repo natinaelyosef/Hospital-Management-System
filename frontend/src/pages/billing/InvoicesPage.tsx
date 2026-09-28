@@ -1,13 +1,5 @@
 import { useState } from 'react'
-<<<<<<< HEAD
 import { useNavigate, useSearchParams } from 'react-router-dom'
-=======
-<<<<<<< HEAD
-import { useNavigate, useSearchParams } from 'react-router-dom'
-=======
-import { useNavigate } from 'react-router-dom'
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 import { useQuery } from '@tanstack/react-query'
 import { Receipt } from 'lucide-react'
 import { billingApi, type InvoiceListQuery } from '@/api/billing.api'
@@ -36,28 +28,13 @@ const STATUS_OPTIONS = [
 
 export default function InvoicesPage() {
   const navigate = useNavigate()
-<<<<<<< HEAD
   const [searchParams] = useSearchParams()
-=======
-<<<<<<< HEAD
-  const [searchParams] = useSearchParams()
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   const { hasPermission } = useAuth()
   const { setPage, resetPage, query } = usePagination()
 
   const [term, setTerm] = useState('')
   const [search, setSearch] = useState('')
-<<<<<<< HEAD
   const [status, setStatus] = useState(searchParams.get('status') ?? '')
-=======
-<<<<<<< HEAD
-  const [status, setStatus] = useState(searchParams.get('status') ?? '')
-=======
-  const [status, setStatus] = useState('')
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   const [date, setDate] = useState('')
   const [creating, setCreating] = useState(false)
 

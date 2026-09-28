@@ -38,20 +38,11 @@ class DashboardController extends Controller
             default => ['stats' => []],
         };
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         // Which front door this payload belongs to, so the two home pages know
         // they are looking at their own data.
         $data['portal'] = $user->portal();
         $data['role'] = $role;
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         return $this->ok($data);
     }
 

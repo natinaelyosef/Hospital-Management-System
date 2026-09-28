@@ -3,10 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Transformers\Transform;
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 use App\Models\Patient;
 use App\Models\Role;
 use App\Models\User;
@@ -20,24 +16,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-<<<<<<< HEAD
-=======
-=======
-use App\Models\User;
-use App\Support\AuditLogger;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
 {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     use GeneratesSequentialNumber;
 
     /**
@@ -293,29 +275,15 @@ class AuthController extends Controller
         return $base.'/reset-password?'.http_build_query(['email' => $email, 'token' => $token]);
     }
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     public function login(Request $request): JsonResponse
     {
         $data = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required', 'string'],
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             // Which front door the caller is signing in through. Patients and
             // staff have separate login pages and separate home pages, so this
             // is required rather than inferred.
             'portal' => ['required', Rule::in(User::PORTALS)],
-<<<<<<< HEAD
-=======
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         ]);
 
         $user = User::query()
@@ -323,10 +291,6 @@ class AuthController extends Controller
             ->where('email', $data['email'])
             ->first();
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         $invalid = ! $user || ! Hash::check($data['password'], $user->password);
 
         if ($invalid) {
@@ -381,21 +345,6 @@ class AuthController extends Controller
             ], 403);
         }
 
-<<<<<<< HEAD
-=======
-=======
-        $invalid = ! $user
-            || ! $user->is_active
-            || ! Hash::check($data['password'], $user->password);
-
-        if ($invalid) {
-            return response()->json([
-                'message' => 'Invalid email or matching user not found or account is inactive.',
-            ], 422);
-        }
-
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         $token = $user->createToken('api')->plainTextToken;
 
         $user->forceFill(['last_login_at' => now()])->save();
@@ -405,14 +354,7 @@ class AuthController extends Controller
         return $this->ok([
             'token' => $token,
             'user' => Transform::user($user->load(['role.permissions', 'patient', 'doctor'])),
-<<<<<<< HEAD
             'portal' => $user->portal(),
-=======
-<<<<<<< HEAD
-            'portal' => $user->portal(),
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         ]);
     }
 
@@ -421,10 +363,6 @@ class AuthController extends Controller
         return $this->ok(Transform::user($request->user()->load(['role.permissions', 'patient', 'doctor'])));
     }
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     /**
      * Public: which front door does this email belong to? Lets the two login
      * pages point an account at the right one instead of a bare rejection.
@@ -446,11 +384,6 @@ class AuthController extends Controller
         ]);
     }
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     public function logout(Request $request): JsonResponse
     {
         $request->user()?->currentAccessToken()?->delete();

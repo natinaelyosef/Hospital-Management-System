@@ -135,18 +135,9 @@ export const wardApi = {
     const res = await client.put(`/admissions/${id}/discharge`, payload)
     return unwrap<Admission>(res)
   },
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
   async dischargePdf(id: number): Promise<Blob> {
     const res = await client.get(`/admissions/${id}/pdf`, { responseType: 'blob' })
     return res.data as Blob
   },
-<<<<<<< HEAD
-=======
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 }

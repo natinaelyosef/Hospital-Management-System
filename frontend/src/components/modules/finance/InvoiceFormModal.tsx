@@ -14,10 +14,6 @@ import { useToast } from '@/components/ui/Toast'
 import type { Invoice, InvoiceItemType, Patient, Service } from '@/types'
 import { formatCurrency } from '@/utils/format'
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 export interface InvoiceLinePreset {
   description: string
   item_type: InvoiceItemType
@@ -32,14 +28,6 @@ export interface InvoiceFormModalProps {
   initialPatient?: Patient | null
   visitId?: number | null
   presetLines?: InvoiceLinePreset[] | null
-<<<<<<< HEAD
-=======
-=======
-export interface InvoiceFormModalProps {
-  open: boolean
-  invoice?: Invoice | null
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   onClose: () => void
   onSaved: (invoice: Invoice) => void
 }
@@ -80,15 +68,7 @@ function emptyLine(): LineDraft {
   }
 }
 
-<<<<<<< HEAD
 export function InvoiceFormModal({ open, invoice, initialPatient, visitId, presetLines, onClose, onSaved }: InvoiceFormModalProps) {
-=======
-<<<<<<< HEAD
-export function InvoiceFormModal({ open, invoice, initialPatient, visitId, presetLines, onClose, onSaved }: InvoiceFormModalProps) {
-=======
-export function InvoiceFormModal({ open, invoice, onClose, onSaved }: InvoiceFormModalProps) {
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   const queryClient = useQueryClient()
   const toast = useToast()
   const isEdit = Boolean(invoice)
@@ -120,10 +100,6 @@ export function InvoiceFormModal({ open, invoice, onClose, onSaved }: InvoiceFor
           unit_price: String(item.unit_price),
         })),
       )
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     } else if (presetLines && presetLines.length > 0) {
       setPatient(initialPatient ?? null)
       setDiscount('0')
@@ -141,27 +117,12 @@ export function InvoiceFormModal({ open, invoice, onClose, onSaved }: InvoiceFor
       )
     } else {
       setPatient(initialPatient ?? null)
-<<<<<<< HEAD
-=======
-=======
-    } else {
-      setPatient(null)
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
       setDiscount('0')
       setTax('0')
       setNotes('')
       setLines([emptyLine()])
     }
-<<<<<<< HEAD
   }, [open, invoice, initialPatient, visitId, presetLines])
-=======
-<<<<<<< HEAD
-  }, [open, invoice, initialPatient, visitId, presetLines])
-=======
-  }, [open, invoice])
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
   const { data: services } = useQuery({
     queryKey: ['services', 'picker', SERVICES_PAGE],
@@ -202,15 +163,7 @@ export function InvoiceFormModal({ open, invoice, onClose, onSaved }: InvoiceFor
       }
       if (invoice) return billingApi.updateInvoice(invoice.id, payload)
       if (!patient) throw new Error('Select a patient.')
-<<<<<<< HEAD
       return billingApi.createInvoice({ ...payload, patient_id: patient.id, visit_id: visitId ?? undefined })
-=======
-<<<<<<< HEAD
-      return billingApi.createInvoice({ ...payload, patient_id: patient.id, visit_id: visitId ?? undefined })
-=======
-      return billingApi.createInvoice({ ...payload, patient_id: patient.id })
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     },
     onSuccess: async (saved) => {
       await queryClient.invalidateQueries({ queryKey: ['invoices'] })

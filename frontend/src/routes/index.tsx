@@ -1,20 +1,8 @@
-<<<<<<< HEAD
 import { lazy, Suspense, type ReactNode } from 'react'
-=======
-<<<<<<< HEAD
-import { lazy, Suspense, type ReactNode } from 'react'
-=======
-import type { ReactNode } from 'react'
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 import { Navigate, Outlet, Route, Routes } from 'react-router-dom'
 import { PageLoader } from '@/components/ui/Spinner'
 import { useAuth } from '@/contexts/AuthContext'
 import DashboardLayout from '@/layouts/DashboardLayout'
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 import { PORTAL_AFTER_LOGIN, PORTAL_FORGOT, PORTAL_LOGIN, PORTAL_REGISTER, PORTAL_RESET } from '@/lib/portals'
 import type { Portal } from '@/types'
 
@@ -70,57 +58,10 @@ export interface ProtectedRouteProps {
    * sent to its own home page rather than shown a blank or wrong screen.
    */
   portal?: Portal
-<<<<<<< HEAD
-=======
-=======
-import LoginPage from '@/pages/auth/Login'
-import ForbiddenPage from '@/pages/Forbidden'
-import NotFoundPage from '@/pages/NotFound'
-import DashboardPage from '@/pages/dashboard/DashboardPage'
-import PatientsPage from '@/pages/patients/PatientsPage'
-import PatientDetailPage from '@/pages/patients/PatientDetailPage'
-import AppointmentsPage from '@/pages/appointments/AppointmentsPage'
-import VisitsPage from '@/pages/consultation/VisitsPage'
-import VisitDetailPage from '@/pages/consultation/VisitDetailPage'
-import PrescriptionsPage from '@/pages/prescriptions/PrescriptionsPage'
-import PrescriptionDetailPage from '@/pages/prescriptions/PrescriptionDetailPage'
-import MedicinesPage from '@/pages/pharmacy/MedicinesPage'
-import StockPage from '@/pages/pharmacy/StockPage'
-import PharmacyTransactionsPage from '@/pages/pharmacy/PharmacyTransactionsPage'
-import LabRequestsPage from '@/pages/laboratory/LabRequestsPage'
-import LabRequestDetailPage from '@/pages/laboratory/LabRequestDetailPage'
-import LabTestsPage from '@/pages/laboratory/LabTestsPage'
-import WardBoardPage from '@/pages/wards/WardBoardPage'
-import AdmissionsPage from '@/pages/wards/AdmissionsPage'
-import AdmissionDetailPage from '@/pages/wards/AdmissionDetailPage'
-import InvoicesPage from '@/pages/billing/InvoicesPage'
-import InvoiceDetailPage from '@/pages/billing/InvoiceDetailPage'
-import ServicesPage from '@/pages/billing/ServicesPage'
-import InsuranceCompaniesPage from '@/pages/insurance/InsuranceCompaniesPage'
-import PatientInsurancePage from '@/pages/insurance/PatientInsurancePage'
-import ClaimsPage from '@/pages/insurance/ClaimsPage'
-import ReportsPage from '@/pages/reports/ReportsPage'
-import UsersPage from '@/pages/admin/UsersPage'
-import RolesPage from '@/pages/admin/RolesPage'
-import DepartmentsPage from '@/pages/admin/DepartmentsPage'
-import DoctorsPage from '@/pages/admin/DoctorsPage'
-import AuditLogPage from '@/pages/admin/AuditLogPage'
-import SettingsPage from '@/pages/admin/SettingsPage'
-import NotificationsPage from '@/pages/notifications/NotificationsPage'
-import ProfilePage from '@/pages/profile/ProfilePage'
-
-export interface ProtectedRouteProps {
-  permissions?: string[]
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   children?: ReactNode
 }
 
 /** Requires a valid session; renders 403 when `permissions` are not held by the current role. */
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 export function ProtectedRoute({ permissions, portal, children }: ProtectedRouteProps) {
   const { token, user, portal: sessionPortal, loading, hasAnyPermission } = useAuth()
 
@@ -130,47 +71,21 @@ export function ProtectedRoute({ permissions, portal, children }: ProtectedRoute
     return <Navigate to={PORTAL_AFTER_LOGIN[sessionPortal]} replace />
   }
   if (permissions && permissions.length > 0 && !user) return <Navigate to={PORTAL_LOGIN.staff} replace />
-<<<<<<< HEAD
-=======
-=======
-export function ProtectedRoute({ permissions, children }: ProtectedRouteProps) {
-  const { token, user, loading, hasAnyPermission } = useAuth()
-
-  if (!token) return <Navigate to="/login" replace />
-  if (loading) return <PageLoader label="Restoring your session…" />
-  if (permissions && permissions.length > 0 && !user) return <PageLoader label="Restoring your session…" />
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   if (permissions && permissions.length > 0 && !hasAnyPermission(...permissions)) return <ForbiddenPage />
 
   return <>{children ?? <Outlet />}</>
 }
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 function guarded(permissions: string[], element: ReactNode, portal?: Portal) {
   return (
     <ProtectedRoute permissions={permissions} portal={portal}>
       {element}
     </ProtectedRoute>
   )
-<<<<<<< HEAD
-=======
-=======
-function guarded(permissions: string[], element: ReactNode) {
-  return <ProtectedRoute permissions={permissions}>{element}</ProtectedRoute>
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 }
 
 export default function AppRoutes() {
   return (
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     <Suspense fallback={<PageLoader />}>
       <Routes>
       <Route path="/" element={<PatientHome />} />
@@ -214,17 +129,6 @@ export default function AppRoutes() {
       <Route element={<ProtectedRoute />}>
         <Route element={<DashboardLayout />}>
           <Route path="dashboard" element={guarded(['dashboard.view'], <DashboardPage />, 'staff')} />
-<<<<<<< HEAD
-=======
-=======
-    <Routes>
-      <Route path="/login" element={<LoginPage />} />
-
-      <Route element={<ProtectedRoute />}>
-        <Route element={<DashboardLayout />}>
-          <Route index element={guarded([], <DashboardPage />)} />
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
           <Route path="patients" element={guarded(['patients.view'], <PatientsPage />)} />
           <Route path="patients/:id" element={guarded(['patients.view'], <PatientDetailPage />)} />
@@ -245,30 +149,14 @@ export default function AppRoutes() {
           <Route path="pharmacy/stock" element={guarded(['pharmacy.view'], <StockPage />)} />
           <Route path="pharmacy/transactions" element={guarded(['pharmacy.view'], <PharmacyTransactionsPage />)} />
 
-<<<<<<< HEAD
           <Route path="wards" element={guarded(['wards.view'], <WardBoardPage />)} />
           <Route path="wards/admissions" element={guarded(['wards.view'], <AdmissionsPage />)} />
           <Route path="wards/admissions/:id" element={guarded(['wards.view'], <AdmissionDetailPage />)} />
-=======
-<<<<<<< HEAD
-          <Route path="wards" element={guarded(['wards.view'], <WardBoardPage />)} />
-          <Route path="wards/admissions" element={guarded(['wards.view'], <AdmissionsPage />)} />
-          <Route path="wards/admissions/:id" element={guarded(['wards.view'], <AdmissionDetailPage />)} />
-=======
-          <Route path="wards" element={guarded([], <WardBoardPage />)} />
-          <Route path="wards/admissions" element={guarded([], <AdmissionsPage />)} />
-          <Route path="wards/admissions/:id" element={guarded([], <AdmissionDetailPage />)} />
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
           <Route path="billing/invoices" element={guarded(['billing.view'], <InvoicesPage />)} />
           <Route path="billing/invoices/:id" element={guarded(['billing.view'], <InvoiceDetailPage />)} />
           <Route path="billing/services" element={guarded(['billing.view'], <ServicesPage />)} />
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
           <Route path="insurance/companies" element={guarded(['insurance.view'], <InsuranceCompaniesPage />)} />
           <Route path="insurance/policies" element={guarded(['insurance.view'], <PatientInsurancePage />)} />
           <Route path="insurance/claims" element={guarded(['insurance.view'], <ClaimsPage />)} />
@@ -281,23 +169,6 @@ export default function AppRoutes() {
           <Route path="admin/doctors" element={guarded(['doctors.view'], <DoctorsPage />, 'staff')} />
           <Route path="admin/audit-logs" element={guarded(['audit.view'], <AuditLogPage />, 'staff')} />
           <Route path="admin/settings" element={guarded(['settings.manage'], <SettingsPage />, 'staff')} />
-<<<<<<< HEAD
-=======
-=======
-          <Route path="insurance/companies" element={guarded([], <InsuranceCompaniesPage />)} />
-          <Route path="insurance/policies" element={guarded([], <PatientInsurancePage />)} />
-          <Route path="insurance/claims" element={guarded([], <ClaimsPage />)} />
-
-          <Route path="reports" element={guarded(['reports.view'], <ReportsPage />)} />
-
-          <Route path="admin/users" element={guarded(['users.view'], <UsersPage />)} />
-          <Route path="admin/roles" element={guarded(['roles.manage'], <RolesPage />)} />
-          <Route path="admin/departments" element={guarded(['departments.view'], <DepartmentsPage />)} />
-          <Route path="admin/doctors" element={guarded(['doctors.view'], <DoctorsPage />)} />
-          <Route path="admin/audit-logs" element={guarded(['audit.view'], <AuditLogPage />)} />
-          <Route path="admin/settings" element={guarded(['settings.manage'], <SettingsPage />)} />
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
           <Route path="notifications" element={guarded([], <NotificationsPage />)} />
           <Route path="profile" element={guarded([], <ProfilePage />)} />
@@ -306,16 +177,7 @@ export default function AppRoutes() {
       </Route>
 
       <Route path="*" element={<NotFoundPage />} />
-<<<<<<< HEAD
       </Routes>
     </Suspense>
-=======
-<<<<<<< HEAD
-      </Routes>
-    </Suspense>
-=======
-    </Routes>
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   )
 }

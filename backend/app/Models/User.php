@@ -2,26 +2,14 @@
 
 namespace App\Models;
 
-<<<<<<< HEAD
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
-=======
-<<<<<<< HEAD
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletes;
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     use HasApiTokens, Notifiable, SoftDeletes;
 
     public const STATUS_ACTIVE = 'active';
@@ -60,15 +48,6 @@ class User extends Authenticatable
         'name', 'email', 'password', 'phone', 'avatar_path', 'role_id', 'is_active', 'last_login_at',
         'status', 'suspended_by', 'suspended_at', 'suspension_reason',
         'deleted_by', 'deletion_reason', 'invited_at', 'invite_token',
-<<<<<<< HEAD
-=======
-=======
-    use HasApiTokens, Notifiable;
-
-    protected $fillable = [
-        'name', 'email', 'password', 'phone', 'avatar_path', 'role_id', 'is_active', 'last_login_at'
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     ];
 
     protected $casts = [
@@ -76,16 +55,8 @@ class User extends Authenticatable
         'password' => 'hashed',
         'is_active' => 'boolean',
         'last_login_at' => 'datetime',
-<<<<<<< HEAD
         'suspended_at' => 'datetime',
         'invited_at' => 'datetime',
-=======
-<<<<<<< HEAD
-        'suspended_at' => 'datetime',
-        'invited_at' => 'datetime',
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     ];
 
     public function role()
@@ -102,10 +73,6 @@ class User extends Authenticatable
     {
         return $this->hasOne(Doctor::class);
     }
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
     public function suspendedBy()
     {
@@ -253,9 +220,4 @@ class User extends Authenticatable
         $this->tokens()->delete();
         $this->delete();
     }
-<<<<<<< HEAD
-=======
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 }

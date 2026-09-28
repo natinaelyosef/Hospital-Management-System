@@ -71,10 +71,6 @@ abstract class Controller
      */
     protected function isPatientPortal(Request $request): bool
     {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         return $this->portalPatientId($request) !== null;
     }
 
@@ -99,12 +95,6 @@ abstract class Controller
         }
 
         return null;
-<<<<<<< HEAD
-=======
-=======
-        return $request->user()?->patient_id !== null;
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     }
 
     /**
@@ -114,15 +104,7 @@ abstract class Controller
      */
     protected function scopeToSelf(Request $request, Builder $query, string $column = 'patient_id'): Builder
     {
-<<<<<<< HEAD
         $patientId = $this->portalPatientId($request);
-=======
-<<<<<<< HEAD
-        $patientId = $this->portalPatientId($request);
-=======
-        $patientId = $request->user()?->patient_id;
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
         if ($patientId) {
             $query->where($column, $patientId);
@@ -132,15 +114,7 @@ abstract class Controller
     }
 
     /**
-<<<<<<< HEAD
      * Whether the caller holds a permission (Super Admins always do).
-=======
-<<<<<<< HEAD
-     * Whether the caller holds a permission (Super Admins always do).
-=======
-     * Whether the caller holds a permission (admins always do).
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
      */
     protected function allows(Request $request, string $permission): bool
     {
@@ -150,15 +124,7 @@ abstract class Controller
             return false;
         }
 
-<<<<<<< HEAD
         if ($user->isSuperAdmin()) {
-=======
-<<<<<<< HEAD
-        if ($user->isSuperAdmin()) {
-=======
-        if ($user->role?->name === 'admin') {
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             return true;
         }
 

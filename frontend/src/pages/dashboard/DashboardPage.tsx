@@ -15,14 +15,7 @@ import {
   Wallet,
 } from 'lucide-react'
 import { dashboardApi } from '@/api/dashboard.api'
-<<<<<<< HEAD
 import { workflowApi } from '@/api/workflow.api'
-=======
-<<<<<<< HEAD
-import { workflowApi } from '@/api/workflow.api'
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 import { AreaChartCard, PieChartCard } from '@/components/charts'
 import { Panel, PanelRow } from '@/components/modules/overview/Panel'
 import { statIcon } from '@/components/modules/overview/statIcons'
@@ -43,14 +36,7 @@ import type {
   Medicine,
   Patient,
   Prescription,
-<<<<<<< HEAD
   WorkflowTask,
-=======
-<<<<<<< HEAD
-  WorkflowTask,
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 } from '@/types'
 import { cn } from '@/utils/cn'
 import { formatCurrency, formatDate, formatTime, setCurrency, statusLabel } from '@/utils/format'
@@ -73,10 +59,6 @@ interface DashboardPayload {
 
 const ROWS_PER_PANEL = 6
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 /** §18 queue widgets: every role sees its pending handoffs, not a search box. */
 function TasksPanel({ tasks, loading }: { tasks: WorkflowTask[] | undefined; loading: boolean }) {
   if (loading || !tasks || tasks.length === 0) return null
@@ -101,11 +83,6 @@ function TasksPanel({ tasks, loading }: { tasks: WorkflowTask[] | undefined; loa
   )
 }
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 function formatStatValue(value: number | string): string {
   return typeof value === 'number' ? value.toLocaleString('en-US') : value
 }
@@ -158,10 +135,6 @@ export default function DashboardPage() {
     staleTime: 30_000,
   })
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   const { data: tasks, isLoading: loadingTasks } = useQuery({
     queryKey: ['workflow', 'summary'],
     queryFn: () => workflowApi.summary(),
@@ -169,11 +142,6 @@ export default function DashboardPage() {
     retry: 0,
   })
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   const payload: DashboardPayload | undefined = data
 
   useEffect(() => {
@@ -488,16 +456,8 @@ export default function DashboardPage() {
         />
       ) : (
         <div className="space-y-5">
-<<<<<<< HEAD
           <TasksPanel tasks={tasks} loading={loadingTasks} />
 
-=======
-<<<<<<< HEAD
-          <TasksPanel tasks={tasks} loading={loadingTasks} />
-
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
           {stats.length > 0 && (
             <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
               {stats.map((stat, index) => (

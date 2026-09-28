@@ -1,10 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { keepPreviousData, useQuery, useQueryClient } from '@tanstack/react-query'
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 import { Activity, ClipboardList, FileText, Heart, Trash2, Upload, Users } from 'lucide-react'
 import { getErrorMessage } from '@/api/client'
 import { patientApi } from '@/api/patient.api'
@@ -13,16 +9,6 @@ import { IntakeModal } from '@/components/modules/clinical/IntakeModal'
 import { PatientFormModal } from '@/components/modules/clinical/PatientFormModal'
 import { PatientHeader } from '@/components/modules/clinical/PatientHeader'
 import { PatientQrCard } from '@/components/modules/clinical/PatientQrCard'
-<<<<<<< HEAD
-=======
-=======
-import { Activity, FileText, Heart, Trash2, Upload, Users } from 'lucide-react'
-import { getErrorMessage } from '@/api/client'
-import { patientApi } from '@/api/patient.api'
-import { PatientFormModal } from '@/components/modules/clinical/PatientFormModal'
-import { PatientHeader } from '@/components/modules/clinical/PatientHeader'
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 import { VitalsForm } from '@/components/modules/clinical/VitalsForm'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
@@ -54,15 +40,7 @@ const appointmentColumns: Column<Appointment>[] = [
   { key: 'appointment_number', header: 'Number', render: (row) => <span className="font-mono text-xs">{row.appointment_number}</span> },
   { key: 'appointment_date', header: 'Date', render: (row) => formatDate(row.appointment_date) },
   { key: 'start_time', header: 'Time', render: (row) => row.start_time.slice(0, 5) },
-<<<<<<< HEAD
   { key: 'doctor', header: 'Doctor', hideBelow: 'md', render: (row) => row.doctor?.name ?? <span className="text-muted-foreground">Unassigned</span> },
-=======
-<<<<<<< HEAD
-  { key: 'doctor', header: 'Doctor', hideBelow: 'md', render: (row) => row.doctor?.name ?? <span className="text-muted-foreground">Unassigned</span> },
-=======
-  { key: 'doctor', header: 'Doctor', hideBelow: 'md', render: (row) => row.doctor.name },
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   { key: 'type', header: 'Type', hideBelow: 'lg', render: (row) => <span className="capitalize">{row.type.replace('_', ' ')}</span> },
   { key: 'status', header: 'Status', render: (row) => <StatusBadge status={row.status} /> },
 ]
@@ -70,15 +48,7 @@ const appointmentColumns: Column<Appointment>[] = [
 const visitColumns: Column<Visit>[] = [
   { key: 'visit_number', header: 'Visit #', render: (row) => <span className="font-mono text-xs">{row.visit_number}</span> },
   { key: 'visit_date', header: 'Date', render: (row) => formatDate(row.visit_date) },
-<<<<<<< HEAD
   { key: 'doctor', header: 'Doctor', hideBelow: 'md', render: (row) => row.doctor?.name ?? <span className="text-muted-foreground">Unassigned</span> },
-=======
-<<<<<<< HEAD
-  { key: 'doctor', header: 'Doctor', hideBelow: 'md', render: (row) => row.doctor?.name ?? <span className="text-muted-foreground">Unassigned</span> },
-=======
-  { key: 'doctor', header: 'Doctor', hideBelow: 'md', render: (row) => row.doctor.name },
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   { key: 'diagnosis', header: 'Diagnosis', hideBelow: 'lg', render: (row) => <span className="line-clamp-1">{row.diagnosis || '—'}</span> },
   { key: 'status', header: 'Status', render: (row) => <StatusBadge status={row.status} /> },
 ]
@@ -86,15 +56,7 @@ const visitColumns: Column<Visit>[] = [
 const prescriptionColumns: Column<Prescription>[] = [
   { key: 'prescription_number', header: 'RX #', render: (row) => <span className="font-mono text-xs">{row.prescription_number}</span> },
   { key: 'created_at', header: 'Date', render: (row) => formatDate(row.created_at) },
-<<<<<<< HEAD
   { key: 'doctor', header: 'Doctor', hideBelow: 'md', render: (row) => row.doctor?.name ?? <span className="text-muted-foreground">Unassigned</span> },
-=======
-<<<<<<< HEAD
-  { key: 'doctor', header: 'Doctor', hideBelow: 'md', render: (row) => row.doctor?.name ?? <span className="text-muted-foreground">Unassigned</span> },
-=======
-  { key: 'doctor', header: 'Doctor', hideBelow: 'md', render: (row) => row.doctor.name },
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   { key: 'items', header: 'Items', render: (row) => row.items.length },
   { key: 'status', header: 'Status', render: (row) => <StatusBadge status={row.status} /> },
 ]
@@ -153,14 +115,7 @@ export default function PatientDetailPage() {
   const [page, setPage] = useState(1)
   const [editOpen, setEditOpen] = useState(false)
   const [vitalsOpen, setVitalsOpen] = useState(false)
-<<<<<<< HEAD
   const [intakeOpen, setIntakeOpen] = useState(false)
-=======
-<<<<<<< HEAD
-  const [intakeOpen, setIntakeOpen] = useState(false)
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   const [uploading, setUploading] = useState(false)
 
   useEffect(() => setPage(1), [tab])
@@ -298,10 +253,6 @@ export default function PatientDetailPage() {
 
   return (
     <div className="space-y-6">
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
       <PageHeader
         title={patient.full_name}
         subtitle={`${patient.patient_number} · registered ${formatDate(patient.created_at)}`}
@@ -313,12 +264,6 @@ export default function PatientDetailPage() {
           </Can>
         }
       />
-<<<<<<< HEAD
-=======
-=======
-      <PageHeader title={patient.full_name} subtitle={`${patient.patient_number} · registered ${formatDate(patient.created_at)}`} />
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
       <PatientHeader patient={patient} onEdit={canEdit ? () => setEditOpen(true) : undefined} />
 
       <Tabs items={TAB_ITEMS} value={tab} onChange={setTab} />
@@ -348,16 +293,8 @@ export default function PatientDetailPage() {
             </CardContent>
           </Card>
 
-<<<<<<< HEAD
           <div className="flex flex-col gap-5">
           <PatientQrCard patient={patient} />
-=======
-<<<<<<< HEAD
-          <div className="flex flex-col gap-5">
-          <PatientQrCard patient={patient} />
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
           <Card>
             <CardHeader>
               <CardTitle>Medical history</CardTitle>
@@ -379,14 +316,7 @@ export default function PatientDetailPage() {
               </div>
             </CardContent>
           </Card>
-<<<<<<< HEAD
           </div>
-=======
-<<<<<<< HEAD
-          </div>
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         </div>
       )}
 
@@ -432,16 +362,8 @@ export default function PatientDetailPage() {
           <Table
             columns={invoiceColumns}
             data={invoices?.data ?? []}
-<<<<<<< HEAD
             onRowClick={(row) => void navigate(`/billing/invoices/${row.id}`)}
             rowKey={(row) => row.id}
-=======
-<<<<<<< HEAD
-            onRowClick={(row) => void navigate(`/billing/invoices/${row.id}`)}
-            rowKey={(row) => row.id}
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             empty={<EmptyState icon={<FileText size={22} />} title="No invoices yet" compact />}
           />
           {invoices && <Pagination meta={invoices.meta} onPageChange={setPage} />}
@@ -507,14 +429,7 @@ export default function PatientDetailPage() {
       )}
 
       <PatientFormModal open={editOpen} onClose={() => setEditOpen(false)} patient={patient} />
-<<<<<<< HEAD
       <IntakeModal open={intakeOpen} onClose={() => setIntakeOpen(false)} patientId={patient.id} />
-=======
-<<<<<<< HEAD
-      <IntakeModal open={intakeOpen} onClose={() => setIntakeOpen(false)} patientId={patient.id} />
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
       <VitalsForm open={vitalsOpen} onClose={() => setVitalsOpen(false)} onSubmit={recordVitals} title="Record vitals" />
     </div>
   )

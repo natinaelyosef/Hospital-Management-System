@@ -126,10 +126,6 @@ class AdmissionController extends Controller
         return $this->ok(Transform::admission($admission));
     }
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     public function pdf(Admission $admission)
     {
         $admission->load(self::RELATIONS);
@@ -152,11 +148,6 @@ class AdmissionController extends Controller
         return $pdf->download($admission->admission_number.'.pdf');
     }
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     public function transfer(Request $request, Admission $admission): JsonResponse
     {
         $data = $request->validate([

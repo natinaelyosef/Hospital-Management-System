@@ -1,13 +1,5 @@
 import client, { unwrap, unwrapPaginated } from './client'
-<<<<<<< HEAD
 import type { Invoice, Paginated, Prescription, PrescriptionItem, PrescriptionStatus } from '@/types'
-=======
-<<<<<<< HEAD
-import type { Invoice, Paginated, Prescription, PrescriptionItem, PrescriptionStatus } from '@/types'
-=======
-import type { Paginated, Prescription, PrescriptionItem, PrescriptionStatus } from '@/types'
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
 export interface PrescriptionListQuery {
   page?: number
@@ -15,14 +7,7 @@ export interface PrescriptionListQuery {
   status?: string
   search?: string
   patient_id?: number
-<<<<<<< HEAD
   visit_id?: number
-=======
-<<<<<<< HEAD
-  visit_id?: number
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   doctor_id?: number
 }
 
@@ -55,37 +40,19 @@ export const prescriptionApi = {
     return unwrap<Prescription>(res)
   },
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   /** Pharmacist handoff: prepare the bill document (medicines + lab costs) for the accountant. */
   async prepareInvoice(id: number, payload: { discount?: number; tax?: number; notes?: string } = {}): Promise<Invoice> {
     const res = await client.post(`/prescriptions/${id}/invoice`, payload)
     return unwrap<Invoice>(res)
   },
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   async pending(query: PrescriptionListQuery = {}): Promise<Paginated<Prescription>> {
     const res = await client.get('/prescriptions/pending', { params: query })
     return unwrapPaginated<Prescription>(res)
   },
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
   async pdf(id: number): Promise<Blob> {
     const res = await client.get(`/prescriptions/${id}/pdf`, { responseType: 'blob' })
     return res.data as Blob
   },
-<<<<<<< HEAD
-=======
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 }

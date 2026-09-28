@@ -15,14 +15,7 @@
     "axios": "^1.20.0",
     "date-fns": "^4.4.0",
     "lucide-react": "^1.48.0",
-<<<<<<< HEAD
     "qrcode.react": "^4.2.0",
-=======
-<<<<<<< HEAD
-    "qrcode.react": "^4.2.0",
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router-dom": "^7.18.4",

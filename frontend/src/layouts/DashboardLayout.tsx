@@ -7,41 +7,19 @@ import {
   LogOut,
   Menu,
   Moon,
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-
-  Search,
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   Sun,
   User,
   X,
 } from 'lucide-react'
 import { notificationApi } from '@/api/notification.api'
 import { miscApi } from '@/api/misc.api'
-<<<<<<< HEAD
 import { GlobalSearch } from '@/components/modules/clinical/GlobalSearch'
-=======
-<<<<<<< HEAD
-import { GlobalSearch } from '@/components/modules/clinical/GlobalSearch'
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
 import { Dropdown } from '@/components/ui/Dropdown'
 import { Spinner } from '@/components/ui/Spinner'
 import { useAuth } from '@/contexts/AuthContext'
 import { useTheme } from '@/contexts/ThemeContext'
-<<<<<<< HEAD
 import { PORTAL_CHOOSER } from '@/lib/portals'
-=======
-<<<<<<< HEAD
-import { PORTAL_CHOOSER } from '@/lib/portals'
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 import { formatDateTime, initials, setCurrency } from '@/utils/format'
 import { cn } from '@/utils/cn'
 import { pageTitle, visibleGroups, type NavItem } from './nav'
@@ -243,13 +221,6 @@ export default function DashboardLayout() {
   const navigate = useNavigate()
   const [collapsed, setCollapsed] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-  const [search, setSearch] = useState('')
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
   useEffect(() => setMobileOpen(false), [location.pathname])
 
@@ -264,18 +235,6 @@ export default function DashboardLayout() {
     if (settings?.currency) setCurrency(settings.currency)
   }, [settings])
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-  const submitSearch = () => {
-    const term = search.trim()
-    if (!term) return
-    void navigate(`/patients?search=${encodeURIComponent(term)}`)
-  }
-
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   return (
     <div className="flex min-h-screen bg-background">
       <aside
@@ -321,51 +280,16 @@ export default function DashboardLayout() {
           </button>
 
           <h1 className="shrink-0 text-sm font-semibold text-foreground sm:text-base">
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             {pageTitle(location.pathname, user)}
           </h1>
 
           <GlobalSearch />
-<<<<<<< HEAD
-=======
-=======
-            {pageTitle(location.pathname)}
-          </h1>
-
-          <div className="relative ml-auto hidden w-full max-w-xs md:block">
-            <Search size={15} className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground" />
-            <input
-              type="search"
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              onKeyDown={(event) => {
-                if (event.key === 'Enter') submitSearch()
-              }}
-              placeholder="Search patients..."
-              aria-label="Global search"
-              className="h-9 w-full rounded-lg border border-input bg-background pr-3 pl-9 text-sm text-foreground transition-colors placeholder:text-muted-foreground/70 focus-visible:border-primary/60 focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:outline-none"
-            />
-          </div>
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
           <div className="ml-auto flex items-center gap-1">
             <button
               type="button"
-<<<<<<< HEAD
               aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
               aria-pressed={theme === 'dark'}
-=======
-<<<<<<< HEAD
-              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-              aria-pressed={theme === 'dark'}
-=======
-              aria-label="Toggle dark mode"
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
               onClick={toggle}
               className="inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             >
@@ -410,19 +334,9 @@ export default function DashboardLayout() {
                     onClick={async () => {
                       close()
                       await logout()
-<<<<<<< HEAD
                       // Back to the front-door chooser, so signing out of either
                       // portal never drops you on the wrong login page.
                       void navigate(PORTAL_CHOOSER)
-=======
-<<<<<<< HEAD
-                      // Back to the front-door chooser, so signing out of either
-                      // portal never drops you on the wrong login page.
-                      void navigate(PORTAL_CHOOSER)
-=======
-                      void navigate('/login')
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
                     }}
                     className="flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-xs text-destructive hover:bg-destructive/10"
                   >

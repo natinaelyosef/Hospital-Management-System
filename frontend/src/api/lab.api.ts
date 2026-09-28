@@ -23,14 +23,7 @@ export interface LabRequestListQuery {
   search?: string
   date?: string
   patient_id?: number
-<<<<<<< HEAD
   visit_id?: number
-=======
-<<<<<<< HEAD
-  visit_id?: number
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 }
 
 export interface LabRequestInput {
@@ -99,18 +92,9 @@ export const labApi = {
     const res = await client.post(`/lab-requests/${id}/cancel`)
     return unwrap<LabRequest>(res)
   },
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
   async reportPdf(id: number): Promise<Blob> {
     const res = await client.get(`/lab-requests/${id}/pdf`, { responseType: 'blob' })
     return res.data as Blob
   },
-<<<<<<< HEAD
-=======
-=======
->>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
->>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 }
