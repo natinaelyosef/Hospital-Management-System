@@ -134,6 +134,7 @@ export interface AppointmentSlot {
 
 export type VisitType = 'opd' | 'emergency' | 'follow_up'
 
+<<<<<<< HEAD
 export type VisitStatus =
   | 'registered'
   | 'intake_completed'
@@ -156,16 +157,24 @@ export type VisitStatus =
 export type VisitPriority = 'normal' | 'urgent' | 'emergency'
 
 export type VisitSeverity = 'mild' | 'moderate' | 'severe'
+=======
+export type VisitStatus = 'in_progress' | 'completed'
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 
 export interface Visit {
   id: number
   visit_number: string
   patient: Patient
+<<<<<<< HEAD
   doctor: Doctor | null
+=======
+  doctor: Doctor
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   appointment_id: number | null
   department_id: number | null
   visit_date: string
   type: VisitType
+<<<<<<< HEAD
   priority: VisitPriority
   chief_complaint: string | null
   symptoms: string | null
@@ -174,13 +183,20 @@ export interface Visit {
   previous_conditions: string | null
   current_medications: string | null
   intake_notes: string | null
+=======
+  chief_complaint: string | null
+  symptoms: string | null
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   diagnosis: string | null
   treatment: string | null
   medical_notes: string | null
   follow_up_date: string | null
   status: VisitStatus
+<<<<<<< HEAD
   referred_by: number | null
   referred_at: string | null
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   created_at: string
   vital_signs: VitalSign[]
   prescriptions: Prescription[]
@@ -228,8 +244,11 @@ export interface PrescriptionItem {
   duration: string
   quantity: number
   instructions: string | null
+<<<<<<< HEAD
   unit_price?: number | null
   line_total?: number | null
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 }
 
 export interface Prescription {
@@ -245,6 +264,7 @@ export interface Prescription {
   dispensed_at: string | null
   created_at: string
   items: PrescriptionItem[]
+<<<<<<< HEAD
   estimated_total?: number | null
   /** Payment gate: the accountant has approved the cash payment. */
   payment_approved: boolean
@@ -260,6 +280,8 @@ export interface Prescription {
     approved_at: string | null
     approved_by_name: string | null
   } | null
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 }
 
 export interface MedicineBatch {
@@ -364,7 +386,10 @@ export interface LabResult {
   lab_test_id: number
   test_name: string
   test_code: string
+<<<<<<< HEAD
   test_price?: number | null
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   status: LabResultStatus
   result_value: string | null
   reference_range: string | null
@@ -378,14 +403,20 @@ export interface LabRequest {
   request_number: string
   patient: Patient
   doctor: Doctor | null
+<<<<<<< HEAD
   visit_id: number | null
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   priority: LabPriority
   status: LabRequestStatus
   notes: string | null
   requested_at: string
   created_at: string
   results: LabResult[]
+<<<<<<< HEAD
   estimated_cost?: number | null
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 }
 
 export type BedStatus = 'available' | 'occupied' | 'maintenance' | 'reserved'
@@ -487,11 +518,14 @@ export interface Invoice {
   id: number
   invoice_number: string
   patient: Patient
+<<<<<<< HEAD
   patient_id?: number | null
   visit_id?: number | null
   admission_id?: number | null
   /** The prescription this bill was prepared for, when there is one. */
   prescription_id?: number | null
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   sub_total: number
   discount: number
   tax: number
@@ -502,12 +536,15 @@ export interface Invoice {
   insurance_covered: number
   notes: string | null
   issued_by_name: string
+<<<<<<< HEAD
   /** Approval is a separate, explicit accountant decision from recording cash. */
   is_approved: boolean
   approved_by_name: string | null
   approved_at: string | null
   approval_notes: string | null
   paid_at?: string | null
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   created_at: string
   items: InvoiceItem[]
   payments: Payment[]
@@ -576,8 +613,11 @@ export interface Permission {
   group: string
 }
 
+<<<<<<< HEAD
 export type UserStatus = 'active' | 'suspended' | 'inactive' | 'pending'
 
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 export interface User {
   id: number
   name: string
@@ -586,11 +626,15 @@ export interface User {
   role: Role
   patient_id: number | null
   doctor_id: number | null
+<<<<<<< HEAD
   status: UserStatus
   is_active: boolean
   suspended_at: string | null
   suspension_reason: string | null
   invited_at: string | null
+=======
+  is_active: boolean
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   last_login_at: string | null
   created_at: string
 }
@@ -598,6 +642,7 @@ export interface User {
 export interface UserInput {
   name: string
   email: string
+<<<<<<< HEAD
   password?: string
   phone?: string
   role_id: number
@@ -621,6 +666,17 @@ export interface LoginResponse {
 export interface PortalProbe {
   portal: Portal | null
   exists: boolean
+=======
+  password: string
+  phone?: string
+  role_id: number
+  is_active?: boolean
+}
+
+export interface LoginResponse {
+  token: string
+  user: User
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 }
 
 export interface NotificationPayload {
@@ -657,10 +713,13 @@ export interface DashboardStat {
 
 export interface DashboardData {
   stats: DashboardStat[]
+<<<<<<< HEAD
   /** Which front door this payload belongs to. */
   portal: Portal
   /** The role name that produced the payload. */
   role: string | null
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   revenue: { today: number; month: number; outstanding: number; currency: string }
   recent_appointments: Appointment[]
   recent_patients: Patient[]
@@ -670,10 +729,13 @@ export interface DashboardData {
   appointments_by_status: { status: string; count: number }[]
   upcoming?: Appointment[]
   waiting?: Appointment[]
+<<<<<<< HEAD
   /** Patient-portal sections. Present only on the patient dashboard payload. */
   prescriptions?: Prescription[]
   invoices?: Invoice[]
   lab_requests?: LabRequest[]
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 }
 
 export interface ReportPoint {
@@ -681,6 +743,7 @@ export interface ReportPoint {
   value: number
 }
 
+<<<<<<< HEAD
 export interface WorkflowTask {
   key: string
   label: string
@@ -705,6 +768,8 @@ export interface SuggestedDepartment {
   description: string | null
   score: number
 }
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 export interface LabelSeriesReport {
   labels: string[]
   series: number[]

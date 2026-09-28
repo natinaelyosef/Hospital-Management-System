@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from 'react'
+<<<<<<< HEAD
 import { Link, useParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Check, Download, Printer, Receipt, Stethoscope } from 'lucide-react'
@@ -10,6 +11,16 @@ import { Alert } from '@/components/ui/Alert'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
+=======
+import { useParams } from 'react-router-dom'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { Check, Printer, Stethoscope } from 'lucide-react'
+import { getErrorMessage } from '@/api/client'
+import { prescriptionApi } from '@/api/prescription.api'
+import { Badge } from '@/components/ui/Badge'
+import { Button } from '@/components/ui/Button'
+import { Card, CardContent } from '@/components/ui/Card'
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 import { EmptyState } from '@/components/ui/EmptyState'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { PageLoader } from '@/components/ui/Spinner'
@@ -19,7 +30,11 @@ import { useAuth } from '@/contexts/AuthContext'
 import { useConfirm } from '@/hooks'
 import type { PrescriptionStatus } from '@/types'
 import { cn } from '@/utils/cn'
+<<<<<<< HEAD
 import { formatCurrency, formatDate, formatDateTime, statusLabel } from '@/utils/format'
+=======
+import { formatDate, formatDateTime, statusLabel } from '@/utils/format'
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 
 const STEPS: PrescriptionStatus[] = ['pending', 'processing', 'dispensed']
 
@@ -52,6 +67,7 @@ export default function PrescriptionDetailPage() {
   const confirm = useConfirm()
   const { hasPermission } = useAuth()
   const [pendingTarget, setPendingTarget] = useState<PrescriptionStatus | null>(null)
+<<<<<<< HEAD
   const [downloading, setDownloading] = useState(false)
 
   const downloadPdf = async () => {
@@ -65,6 +81,8 @@ export default function PrescriptionDetailPage() {
       setDownloading(false)
     }
   }
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 
   const { data: prescription, isLoading, isError, refetch } = useQuery({
     queryKey: ['prescription', prescriptionId],
@@ -72,6 +90,7 @@ export default function PrescriptionDetailPage() {
     enabled: Number.isFinite(prescriptionId) && prescriptionId > 0,
   })
 
+<<<<<<< HEAD
   const canViewBilling = hasPermission('billing.view')
   const { data: visitInvoicesData } = useQuery({
     queryKey: ['prescription', prescriptionId, 'invoices'],
@@ -91,16 +110,21 @@ export default function PrescriptionDetailPage() {
   const paymentApproved = prescription?.payment_approved ?? false
   const canBill = hasPermission('billing.invoice.create') || hasPermission('prescriptions.create') || hasPermission('prescriptions.dispense')
 
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   const statusMutation = useMutation({
     mutationFn: (status: PrescriptionStatus) => prescriptionApi.updateStatus(prescriptionId, status),
     onSuccess: (updated) => {
       toast.success('Status updated', `${updated.prescription_number} is now ${statusLabel(updated.status)}`)
       queryClient.invalidateQueries({ queryKey: ['prescription', prescriptionId] })
       queryClient.invalidateQueries({ queryKey: ['prescriptions'] })
+<<<<<<< HEAD
       if (updated.visit_id) {
         queryClient.invalidateQueries({ queryKey: ['visit', updated.visit_id] })
         queryClient.invalidateQueries({ queryKey: ['visit', updated.visit_id, 'invoices'] })
       }
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
       setPendingTarget(null)
     },
     onError: (caught) => {
@@ -109,6 +133,7 @@ export default function PrescriptionDetailPage() {
     },
   })
 
+<<<<<<< HEAD
   const billMutation = useMutation({
     mutationFn: () => prescriptionApi.prepareInvoice(prescriptionId),
     onSuccess: (invoice) => {
@@ -124,12 +149,18 @@ export default function PrescriptionDetailPage() {
     onError: (caught) => toast.error('Unable to prepare bill', getErrorMessage(caught)),
   })
 
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   const requestTransition = async (target: PrescriptionStatus) => {
     const approved = await confirm({
       title: `Mark prescription as ${statusLabel(target).toLowerCase()}?`,
       message:
         target === 'dispensed'
+<<<<<<< HEAD
           ? 'Dispensing will decrement pharmacy stock for every line item. Hand the medicines to the patient.'
+=======
+          ? 'Dispensing will decrement pharmacy stock for every line item.'
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
           : `${prescription?.prescription_number} will move to “${statusLabel(target)}”.`,
       confirmLabel: target === 'dispensed' ? 'Dispense' : 'Confirm',
       tone: target === 'cancelled' ? 'destructive' : 'default',
@@ -153,6 +184,7 @@ export default function PrescriptionDetailPage() {
 
   const currentIndex = STEPS.indexOf(prescription.status)
   const transitions = TRANSITIONS[prescription.status].filter((target) => canTransition(target, hasPermission))
+<<<<<<< HEAD
   // Dispense is genuinely blocked by the server until the accountant approves
   // the payment, so the button is disabled with the reason rather than left to
   // fail on click.
@@ -194,11 +226,21 @@ export default function PrescriptionDetailPage() {
         <PageHeader
           title={`Prescription ${prescription.prescription_number}`}
           subtitle={`${prescription.patient.full_name} · ${formatDate(prescription.created_at)}${prescription.estimated_total != null ? ` · est. ${formatCurrency(prescription.estimated_total)}` : ''}`}
+=======
+
+  return (
+    <div className="space-y-6">
+      <div className="print:hidden">
+        <PageHeader
+          title={`Prescription ${prescription.prescription_number}`}
+          subtitle={`${prescription.patient.full_name} · ${formatDate(prescription.created_at)}`}
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
           actions={
             <>
               <Button variant="outline" icon={<Printer size={15} />} onClick={() => window.print()}>
                 Print
               </Button>
+<<<<<<< HEAD
               <Button variant="outline" icon={<Download size={15} />} loading={downloading} onClick={() => void downloadPdf()}>
                 PDF
               </Button>
@@ -230,6 +272,22 @@ export default function PrescriptionDetailPage() {
                       </Button>
                     )
                   })}
+=======
+              {transitions.length > 0 && (
+                <div className="flex flex-wrap items-center gap-2">
+                  {transitions.map((target) => (
+                    <Button
+                      key={target}
+                      variant={target === 'cancelled' ? 'destructive' : 'primary'}
+                      size="md"
+                      disabled={statusMutation.isPending}
+                      loading={statusMutation.isPending && pendingTarget === target}
+                      onClick={() => void requestTransition(target)}
+                    >
+                      {target === 'dispensed' ? 'Dispense' : target === 'cancelled' ? 'Cancel' : target === 'pending' ? 'Move to pending' : 'Mark processing'}
+                    </Button>
+                  ))}
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
                 </div>
               )}
             </>
@@ -282,10 +340,17 @@ export default function PrescriptionDetailPage() {
           </div>
 
           <div className="overflow-x-auto rounded-lg border">
+<<<<<<< HEAD
             <table className="w-full min-w-[720px] border-collapse text-sm">
               <thead className="bg-muted/60">
                 <tr>
                   {['Medicine', 'Dosage', 'Frequency', 'Duration', 'Qty', 'Unit price', 'Line total', 'Instructions'].map((header) => (
+=======
+            <table className="w-full min-w-[640px] border-collapse text-sm">
+              <thead className="bg-muted/60">
+                <tr>
+                  {['Medicine', 'Dosage', 'Frequency', 'Duration', 'Qty', 'Instructions'].map((header) => (
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
                     <th
                       key={header}
                       className="border-b px-3 py-2.5 text-left text-[11px] font-semibold tracking-wide text-muted-foreground uppercase"
@@ -303,14 +368,18 @@ export default function PrescriptionDetailPage() {
                     <td className="px-3 py-2.5 text-muted-foreground">{item.frequency}</td>
                     <td className="px-3 py-2.5 text-muted-foreground">{item.duration}</td>
                     <td className="px-3 py-2.5 text-muted-foreground">{item.quantity}</td>
+<<<<<<< HEAD
                     <td className="px-3 py-2.5 text-muted-foreground">{item.unit_price != null ? formatCurrency(item.unit_price) : '—'}</td>
                     <td className="px-3 py-2.5 font-medium text-foreground">{item.line_total != null ? formatCurrency(item.line_total) : '—'}</td>
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
                     <td className="px-3 py-2.5 text-muted-foreground">{item.instructions || '—'}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
+<<<<<<< HEAD
           {prescription.estimated_total != null && (
             <p className="text-right text-sm text-muted-foreground">
               Estimated medicines cost: <span className="font-semibold text-foreground">{formatCurrency(prescription.estimated_total)}</span>
@@ -348,6 +417,8 @@ export default function PrescriptionDetailPage() {
               </CardContent>
             </Card>
           )}
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 
           <div className="flex flex-col gap-4 border-t pt-5">
             <span className="text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">Status</span>

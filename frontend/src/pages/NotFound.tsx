@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿import { Link } from 'react-router-dom'
 import { ArrowLeft, SearchX } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
@@ -7,6 +8,13 @@ import { PORTAL_AFTER_LOGIN, PORTAL_CHOOSER } from '@/lib/portals'
 export default function NotFound() {
   const { token, portal } = useAuth()
 
+=======
+import { Link } from 'react-router-dom'
+import { ArrowLeft, SearchX } from 'lucide-react'
+import { Button } from '@/components/ui/Button'
+
+export default function NotFound() {
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-background px-6 text-center">
       <div className="page-noise pointer-events-none absolute inset-0 opacity-60" />
@@ -21,9 +29,15 @@ export default function NotFound() {
             The page you are looking for does not exist, was moved, or you do not have access to it.
           </p>
         </div>
+<<<<<<< HEAD
         <Link to={token && portal ? PORTAL_AFTER_LOGIN[portal] : PORTAL_CHOOSER}>
           <Button variant="primary" size="md" icon={<ArrowLeft size={16} />}>
             {token && portal ? 'Back to my home' : 'Back to the front doors'}
+=======
+        <Link to="/">
+          <Button variant="primary" size="md" icon={<ArrowLeft size={16} />}>
+            Back to dashboard
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
           </Button>
         </Link>
       </div>

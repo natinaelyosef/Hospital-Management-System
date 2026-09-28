@@ -12,7 +12,11 @@ class BillingSummaryController extends Controller
 {
     public function __invoke(Request $request): JsonResponse
     {
+<<<<<<< HEAD
         $patientId = $this->portalPatientId($request);
+=======
+        $patientId = $request->user()?->patient_id;
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 
         $startOfDay = now()->startOfDay();
         $startOfMonth = now()->startOfMonth();

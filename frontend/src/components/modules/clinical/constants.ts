@@ -49,6 +49,7 @@ export const VISIT_TYPE_OPTIONS: SelectOption[] = [
 
 export const VISIT_STATUS_FILTER_OPTIONS: SelectOption[] = [
   { value: '', label: 'All statuses' },
+<<<<<<< HEAD
   { value: 'registered', label: 'Registered' },
   { value: 'intake_completed', label: 'Intake completed' },
   { value: 'referred', label: 'Referred' },
@@ -79,6 +80,10 @@ export const VISIT_SEVERITY_OPTIONS: SelectOption[] = [
   { value: 'mild', label: 'Mild' },
   { value: 'moderate', label: 'Moderate' },
   { value: 'severe', label: 'Severe' },
+=======
+  { value: 'in_progress', label: 'In progress' },
+  { value: 'completed', label: 'Completed' },
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 ]
 
 export const PRESCRIPTION_STATUS_FILTER_OPTIONS: SelectOption[] = [

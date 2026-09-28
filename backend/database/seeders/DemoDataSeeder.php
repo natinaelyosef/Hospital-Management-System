@@ -101,8 +101,12 @@ class DemoDataSeeder extends Seeder
         $roleIds = Role::pluck('id', 'name');
 
         $defs = [
+<<<<<<< HEAD
             'admin' => ['System Administrator', 'super_admin', '+251911100001'],
             'admin2' => ['Assistant Administrator', 'super_admin', '+251911100009'],
+=======
+            'admin' => ['System Administrator', 'admin', '+251911100001'],
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
             'doctor' => ['Dr. Samuel Bekele', 'doctor', '+251911100002'],
             'nurse' => ['Nurse Hana Ali', 'nurse', '+251911100003'],
             'receptionist' => ['Mike Smith', 'receptionist', '+251911100004'],
@@ -373,6 +377,7 @@ class DemoDataSeeder extends Seeder
                 'treatment' => $record[3],
                 'medical_notes' => 'Patient counselled on medication adherence and follow-up.',
                 'follow_up_date' => $i % 2 === 0 ? $appointment->appointment_date->copy()->addDays(14)->toDateString() : null,
+<<<<<<< HEAD
                 'status' => 'visit_completed',
                 'created_by' => $appointment->created_by,
             ]);
@@ -385,6 +390,12 @@ class DemoDataSeeder extends Seeder
                 'note' => 'Seeded historical case.',
             ]);
 
+=======
+                'status' => 'completed',
+                'created_by' => $appointment->created_by,
+            ]);
+
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
             $appointment->visit_id = $visit->id;
             $appointment->save();
 
@@ -1001,7 +1012,11 @@ class DemoDataSeeder extends Seeder
         $settings = [
             'hospital_name' => 'MediCare General Hospital',
             'address' => 'Bole Road, Addis Ababa, Ethiopia',
+<<<<<<< HEAD
             'phone' => '',
+=======
+            'phone' => '+251 11 555 1234',
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
             'email' => 'info@medicare.test',
             'currency' => 'ETB',
             'timezone' => 'Africa/Addis_Ababa',

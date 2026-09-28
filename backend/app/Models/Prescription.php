@@ -13,6 +13,7 @@ class Prescription extends Model
         'diagnosis', 'status', 'notes', 'dispensed_by', 'dispensed_at'
     ];
 
+<<<<<<< HEAD
     /**
      * @return array<string, string>
      */
@@ -24,6 +25,8 @@ class Prescription extends Model
         ];
     }
 
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
     public function patient(): BelongsTo
     {
         return $this->belongsTo(Patient::class);

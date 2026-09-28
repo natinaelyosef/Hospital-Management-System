@@ -14,7 +14,10 @@ import { useToast } from '@/components/ui/Toast'
 import { useDebounce } from '@/hooks/useDebounce'
 import type { Patient, Prescription } from '@/types'
 import { cn } from '@/utils/cn'
+<<<<<<< HEAD
 import { formatCurrency } from '@/utils/format'
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 import { PatientPicker } from './PatientPicker'
 
 export interface PrescriptionBuilderProps {
@@ -30,8 +33,11 @@ interface ItemRow {
   key: string
   medicine_id: number | null
   medicine_name: string
+<<<<<<< HEAD
   unit_price: number | null
   stock_quantity: number | null
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   dosage: string
   frequency: string
   duration: string
@@ -44,8 +50,11 @@ function blankRow(): ItemRow {
     key: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
     medicine_id: null,
     medicine_name: '',
+<<<<<<< HEAD
     unit_price: null,
     stock_quantity: null,
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
     dosage: '',
     frequency: '',
     duration: '',
@@ -62,7 +71,11 @@ function MedicineSelect({
 }: {
   value: number | null
   label: string
+<<<<<<< HEAD
   onChange: (medicineId: number | null, name: string, unitPrice?: number, stockQuantity?: number) => void
+=======
+  onChange: (medicineId: number | null, name: string) => void
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   invalid?: boolean
 }) {
   const [term, setTerm] = useState('')
@@ -92,7 +105,11 @@ function MedicineSelect({
           const next = event.target.value
           setTerm(next)
           setOpen(true)
+<<<<<<< HEAD
           if (value && next !== label) onChange(null, '', undefined, undefined)
+=======
+          if (value && next !== label) onChange(null, '')
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
         }}
         onFocus={() => setOpen(term.trim().length >= 2)}
         onBlur={() => window.setTimeout(() => setOpen(false), 120)}
@@ -110,7 +127,11 @@ function MedicineSelect({
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => {
             setTerm('')
+<<<<<<< HEAD
             onChange(null, '', undefined, undefined)
+=======
+            onChange(null, '')
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
           }}
           className="absolute top-1/2 right-2 inline-flex h-5 w-5 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
         >
@@ -138,7 +159,11 @@ function MedicineSelect({
               type="button"
               onMouseDown={(event) => event.preventDefault()}
               onClick={() => {
+<<<<<<< HEAD
                 onChange(medicine.id, medicine.name, medicine.selling_price, medicine.stock_quantity)
+=======
+                onChange(medicine.id, medicine.name)
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
                 setTerm(medicine.name)
                 setOpen(false)
               }}
@@ -149,7 +174,11 @@ function MedicineSelect({
                 {medicine.strength ? ` · ${medicine.strength}` : ''}
               </span>
               <span className="truncate text-[11px] text-muted-foreground">
+<<<<<<< HEAD
                 {medicine.form} · in stock {medicine.stock_quantity} · {medicine.selling_price.toFixed(2)}
+=======
+                {medicine.form} · in stock {medicine.stock_quantity}
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
               </span>
             </button>
           ))}
@@ -297,6 +326,7 @@ export function PrescriptionBuilder({
                 <MedicineSelect
                   value={row.medicine_id}
                   label={row.medicine_name}
+<<<<<<< HEAD
                   onChange={(medicineId, name, unitPrice, stockQuantity) =>
                     updateRow(row.key, {
                       medicine_id: medicineId,
@@ -315,6 +345,10 @@ export function PrescriptionBuilder({
                       : ''}
                   </p>
                 )}
+=======
+                  onChange={(medicineId, name) => updateRow(row.key, { medicine_id: medicineId, medicine_name: name })}
+                />
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
                 <Input
                   value={row.instructions}
                   onChange={(event) => updateRow(row.key, { instructions: event.target.value })}
@@ -365,6 +399,7 @@ export function PrescriptionBuilder({
           >
             Add medicine
           </Button>
+<<<<<<< HEAD
           {rows.some((row) => row.unit_price != null) && (
             <p className="text-right text-sm text-muted-foreground">
               Estimated cost:{' '}
@@ -380,6 +415,8 @@ export function PrescriptionBuilder({
               — the pharmacist prepares the exact bill for the accountant.
             </p>
           )}
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
         </div>
 
         <div className="flex justify-end gap-2.5 border-t pt-4">

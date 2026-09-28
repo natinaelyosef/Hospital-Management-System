@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿import { matchPath } from 'react-router-dom'
+=======
+import { matchPath } from 'react-router-dom'
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 import {
   Bed,
   Boxes,
@@ -30,11 +34,15 @@ import type { User } from '@/types'
 
 export interface NavItem {
   label: string
+<<<<<<< HEAD
   /** Alternative wording when the signed-in user holds the patient role. */
   patientLabel?: string
   path: string
   /** Alternative target when the signed-in user holds the patient role. */
   patientPath?: string
+=======
+  path: string
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   icon: LucideIcon
   permission?: string | string[]
   roles?: string[]
@@ -43,8 +51,11 @@ export interface NavItem {
 export interface NavGroup {
   id: string
   label: string
+<<<<<<< HEAD
   /** Alternative wording when the signed-in user holds the patient role. */
   patientLabel?: string
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   items: NavItem[]
   permission?: string | string[]
   roles?: string[]
@@ -68,6 +79,7 @@ export function canSee(user: User | null, item: NavItem | NavGroup): boolean {
   return matchesRole(user, item.roles) && hasPermission(user, item.permission)
 }
 
+<<<<<<< HEAD
 function isPatientPortal(user: User | null): boolean {
   return user?.role?.name === 'patient'
 }
@@ -92,6 +104,12 @@ export function visibleGroups(user: User | null): NavGroup[] {
         .filter((item) => canSee(user, item))
         .map((item) => ({ ...item, label: labelOf(user, item), path: pathOf(user, item) })),
     }))
+=======
+export function visibleGroups(user: User | null): NavGroup[] {
+  return navGroups
+    .filter((group) => canSee(user, group))
+    .map((group) => ({ ...group, items: group.items.filter((item) => canSee(user, item)) }))
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
     .filter((group) => group.items.length > 0)
 }
 
@@ -99,6 +117,7 @@ export const navGroups: NavGroup[] = [
   {
     id: 'overview',
     label: 'Overview',
+<<<<<<< HEAD
       items: [
         {
           label: 'Dashboard',
@@ -109,25 +128,42 @@ export const navGroups: NavGroup[] = [
           permission: 'dashboard.view',
         },
       ],
+=======
+    items: [{ label: 'Dashboard', path: '/', icon: LayoutDashboard }],
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   },
   {
     id: 'clinical',
     label: 'Clinical',
+<<<<<<< HEAD
     patientLabel: 'My Care',
     items: [
       { label: 'Patients', patientLabel: 'My Record', path: '/patients', icon: Users, permission: 'patients.view' },
       { label: 'Appointments', patientLabel: 'My Appointments', path: '/appointments', icon: CalendarDays, permission: 'appointments.view' },
       { label: 'Consultation', patientLabel: 'My Visits', path: '/consultation', icon: ClipboardList, permission: 'consultation.view' },
       { label: 'Prescriptions', patientLabel: 'My Prescriptions', path: '/prescriptions', icon: FileText, permission: 'prescriptions.view' },
+=======
+    items: [
+      { label: 'Patients', path: '/patients', icon: Users, permission: 'patients.view' },
+      { label: 'Appointments', path: '/appointments', icon: CalendarDays, permission: 'appointments.view' },
+      { label: 'Consultation', path: '/consultation', icon: ClipboardList, permission: 'consultation.view' },
+      { label: 'Prescriptions', path: '/prescriptions', icon: FileText, permission: 'prescriptions.view' },
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
     ],
   },
   {
     id: 'diagnostics',
     label: 'Diagnostics',
+<<<<<<< HEAD
     patientLabel: 'My Results',
     items: [
       { label: 'Laboratory', patientLabel: 'Lab Results', path: '/laboratory/requests', icon: FlaskConical, permission: 'lab.view' },
       { label: 'Lab Tests', patientLabel: 'Test Catalogue', path: '/laboratory/tests', icon: TestTube, permission: 'lab.view' },
+=======
+    items: [
+      { label: 'Laboratory', path: '/laboratory/requests', icon: FlaskConical, permission: 'lab.view' },
+      { label: 'Lab Tests', path: '/laboratory/tests', icon: TestTube, permission: 'lab.view' },
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
       { label: 'Pharmacy', path: '/pharmacy/medicines', icon: Pill, permission: 'pharmacy.view' },
       { label: 'Stock', path: '/pharmacy/stock', icon: Boxes, permission: 'pharmacy.view' },
       { label: 'Pharmacy Log', path: '/pharmacy/transactions', icon: ScrollText, permission: 'pharmacy.view' },
@@ -137,13 +173,19 @@ export const navGroups: NavGroup[] = [
     id: 'inpatient',
     label: 'Inpatient',
     items: [
+<<<<<<< HEAD
       { label: 'Ward Board', path: '/wards', icon: Bed, permission: 'wards.view' },
       { label: 'Admissions', path: '/wards/admissions', icon: Hospital, permission: 'wards.view' },
+=======
+      { label: 'Ward Board', path: '/wards', icon: Bed },
+      { label: 'Admissions', path: '/wards/admissions', icon: Hospital },
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
     ],
   },
   {
     id: 'finance',
     label: 'Finance',
+<<<<<<< HEAD
     patientLabel: 'My Billing',
     items: [
       { label: 'Invoices', patientLabel: 'My Bills', path: '/billing/invoices', icon: Receipt, permission: 'billing.view' },
@@ -151,6 +193,14 @@ export const navGroups: NavGroup[] = [
       { label: 'Insurance', path: '/insurance/companies', icon: ShieldCheck, permission: 'insurance.view' },
       { label: 'Policies', path: '/insurance/policies', icon: FileCheck, permission: 'insurance.view' },
       { label: 'Claims', path: '/insurance/claims', icon: ClipboardCheck, permission: 'insurance.view' },
+=======
+    items: [
+      { label: 'Invoices', path: '/billing/invoices', icon: Receipt, permission: 'billing.view' },
+      { label: 'Services', path: '/billing/services', icon: Wallet, permission: 'billing.view' },
+      { label: 'Insurance', path: '/insurance/companies', icon: ShieldCheck },
+      { label: 'Policies', path: '/insurance/policies', icon: FileCheck },
+      { label: 'Claims', path: '/insurance/claims', icon: ClipboardCheck },
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
     ],
   },
   {
@@ -161,6 +211,10 @@ export const navGroups: NavGroup[] = [
   {
     id: 'administration',
     label: 'Administration',
+<<<<<<< HEAD
+=======
+    roles: ['admin'],
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
     items: [
       { label: 'Users', path: '/admin/users', icon: UserCog, permission: 'users.view' },
       { label: 'Roles', path: '/admin/roles', icon: KeyRound, permission: 'roles.manage' },
@@ -185,11 +239,19 @@ export const routeTitles: { pattern: string; title: string }[] = [
   { pattern: '/403', title: 'Access Denied' },
 ]
 
+<<<<<<< HEAD
 export function pageTitle(pathname: string, user: User | null = null): string {
   for (const group of navGroups) {
     for (const item of group.items) {
       if (item.path === pathname) return labelOf(user, item)
       if (matchPath({ path: item.path, end: false }, pathname)) return labelOf(user, item)
+=======
+export function pageTitle(pathname: string): string {
+  for (const group of navGroups) {
+    for (const item of group.items) {
+      if (item.path === pathname) return item.label
+      if (item.path !== '/' && matchPath({ path: item.path, end: false }, pathname)) return item.label
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
     }
   }
   for (const entry of routeTitles) {

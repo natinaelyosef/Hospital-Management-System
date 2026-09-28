@@ -14,6 +14,7 @@ class Patient extends Model
         'blood_group', 'allergies', 'medical_history', 'photo_path', 'user_id', 'registered_by'
     ];
 
+<<<<<<< HEAD
     /**
      * @return array<string, string>
      */
@@ -24,6 +25,8 @@ class Patient extends Model
         ];
     }
 
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

@@ -98,6 +98,7 @@ const STATUS_TONES: Record<string, Tone> = {
   submitted: 'info',
   approved: 'success',
   rejected: 'danger',
+<<<<<<< HEAD
   active: 'success',
   inactive: 'neutral',
   suspended: 'danger',
@@ -122,6 +123,8 @@ const STATUS_TONES: Record<string, Tone> = {
   mild: 'neutral',
   moderate: 'warning',
   severe: 'danger',
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 }
 
 export function statusTone(status: string | null | undefined): Tone {

@@ -126,6 +126,7 @@ class AdmissionController extends Controller
         return $this->ok(Transform::admission($admission));
     }
 
+<<<<<<< HEAD
     public function pdf(Admission $admission)
     {
         $admission->load(self::RELATIONS);
@@ -148,6 +149,8 @@ class AdmissionController extends Controller
         return $pdf->download($admission->admission_number.'.pdf');
     }
 
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
     public function transfer(Request $request, Admission $admission): JsonResponse
     {
         $data = $request->validate([

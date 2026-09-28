@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Visit extends Model
 {
+<<<<<<< HEAD
     /**
      * The connected-workflow case machine (§19 of the product spec). Order
      * matters: App\Support\VisitWorkflow only ever moves a case forward
@@ -69,6 +70,15 @@ class Visit extends Model
         ];
     }
 
+=======
+    protected $fillable = [
+        'visit_number', 'patient_id', 'doctor_id', 'appointment_id', 
+        'department_id', 'visit_date', 'type', 'chief_complaint', 
+        'symptoms', 'diagnosis', 'treatment', 'medical_notes', 
+        'follow_up_date', 'status', 'created_by'
+    ];
+
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
     public function patient(): BelongsTo
     {
         return $this->belongsTo(Patient::class);
@@ -108,6 +118,7 @@ class Visit extends Model
     {
         return $this->hasMany(LabRequest::class);
     }
+<<<<<<< HEAD
 
     public function transitions(): HasMany
     {
@@ -123,4 +134,6 @@ class Visit extends Model
     {
         return in_array($this->status, self::TERMINAL, true);
     }
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 }

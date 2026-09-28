@@ -49,8 +49,12 @@ export interface ClaimListQuery {
 
 export interface ClaimInput {
   invoice_id: number
+<<<<<<< HEAD
   company_id?: number
   patient_insurance_id: number
+=======
+  company_id: number
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   amount: number
   notes?: string
 }

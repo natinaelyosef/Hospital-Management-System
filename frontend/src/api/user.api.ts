@@ -1,14 +1,21 @@
 import client, { unwrap, unwrapPaginated } from './client'
+<<<<<<< HEAD
 import type { Paginated, Permission, Role, User, UserInput, UserStatus } from '@/types'
+=======
+import type { Paginated, Permission, Role, User, UserInput } from '@/types'
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 
 export interface UserListQuery {
   page?: number
   per_page?: number
   search?: string
   role_id?: number
+<<<<<<< HEAD
   status?: UserStatus
   sort?: 'name' | 'email' | 'status' | 'created_at'
   direction?: 'asc' | 'desc'
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 }
 
 export interface RoleInput {
@@ -18,6 +25,7 @@ export interface RoleInput {
   permissions: number[]
 }
 
+<<<<<<< HEAD
 export interface InvitePayload {
   name: string
   email: string
@@ -31,6 +39,8 @@ export interface InviteResponse {
   invite_url: string
 }
 
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 type RoleResponse = Omit<Role, 'permissions'> & { permissions: Array<string | { name: string }> }
 
 function normalizeRole(role: RoleResponse): Role {
@@ -57,6 +67,7 @@ export const userApi = {
     return unwrap<User>(res)
   },
 
+<<<<<<< HEAD
   async remove(id: number, reason?: string): Promise<void> {
     await client.delete(`/users/${id}`, { data: reason ? { reason } : undefined })
   },
@@ -86,6 +97,10 @@ export const userApi = {
   async resendInvite(id: number): Promise<InviteResponse> {
     const res = await client.post(`/users/${id}/invite`)
     return unwrap<InviteResponse>(res)
+=======
+  async remove(id: number): Promise<void> {
+    await client.delete(`/users/${id}`)
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   },
 
   async roles(): Promise<Role[]> {

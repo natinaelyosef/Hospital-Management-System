@@ -169,7 +169,11 @@ class AppointmentController extends Controller
         ]);
 
         $doctorId = (int) ($data['doctor_id'] ?? $appointment->doctor_id);
+<<<<<<< HEAD
         $appointmentDate = $data['appointment_date'] ?? Carbon::parse($appointment->appointment_date)->toDateString();
+=======
+        $appointmentDate = $data['appointment_date'] ?? $appointment->appointment_date->toDateString();
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
         $start = Carbon::parse($data['start_time'] ?? $appointment->start_time)->format('H:i:s');
 
         $end = Carbon::parse($start)
@@ -393,7 +397,11 @@ class AppointmentController extends Controller
         $appointment->status = 'in_progress';
 
         if ($appointment->queue_number === null) {
+<<<<<<< HEAD
             $appointment->queue_number = $this->nextQueueNumber(Carbon::parse($appointment->appointment_date)->toDateString());
+=======
+            $appointment->queue_number = $this->nextQueueNumber($appointment->appointment_date->toDateString());
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
         }
 
         $appointment->save();
@@ -459,6 +467,27 @@ class AppointmentController extends Controller
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Id of the patients row owned by the caller (null for staff accounts).
+     */
+    private function portalPatientId(Request $request): ?int
+    {
+        $user = $request->user();
+
+        if (! $user) {
+            return null;
+        }
+
+        if ($this->isPatientPortal($request)) {
+            return (int) $user->patient_id;
+        }
+
+        return $user->patient?->id;
+    }
+
+    /**
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
      * Doctors only see their own appointments (admins see everything).
      */
     private function callerDoctorId(Request $request): ?int

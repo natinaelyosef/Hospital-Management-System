@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Invoice extends Model
 {
     protected $fillable = [
+<<<<<<< HEAD
         'invoice_number', 'patient_id', 'visit_id', 'admission_id', 'prescription_id',
         'sub_total', 'discount', 'tax', 'total', 'paid_amount', 
         'insurance_covered', 'status', 'notes', 'issued_by', 'paid_at',
@@ -44,6 +45,13 @@ class Invoice extends Model
         return round((float) $this->total - (float) $this->paid_amount, 2);
     }
 
+=======
+        'invoice_number', 'patient_id', 'visit_id', 'admission_id', 
+        'sub_total', 'discount', 'tax', 'total', 'paid_amount', 
+        'insurance_covered', 'status', 'notes', 'issued_by', 'paid_at'
+    ];
+
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
     public function patient(): BelongsTo
     {
         return $this->belongsTo(Patient::class);
@@ -58,6 +66,7 @@ class Invoice extends Model
     {
         return $this->hasMany(Payment::class);
     }
+<<<<<<< HEAD
 
     public function issuer(): BelongsTo
     {
@@ -85,4 +94,6 @@ class Invoice extends Model
     {
         return $this->belongsTo(Admission::class);
     }
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 }

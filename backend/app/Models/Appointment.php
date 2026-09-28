@@ -14,6 +14,7 @@ class Appointment extends Model
         'queue_number', 'reason', 'notes', 'cancelled_reason', 'visit_id', 'created_by'
     ];
 
+<<<<<<< HEAD
     /**
      * @return array<string, string>
      */
@@ -25,6 +26,8 @@ class Appointment extends Model
         ];
     }
 
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
     public function patient(): BelongsTo
     {
         return $this->belongsTo(Patient::class);

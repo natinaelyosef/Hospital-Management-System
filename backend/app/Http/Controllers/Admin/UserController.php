@@ -6,12 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Http\Transformers\Transform;
 use App\Models\Role;
 use App\Models\User;
+<<<<<<< HEAD
 use App\Notifications\GenericNotification;
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 use App\Support\AuditLogger;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+<<<<<<< HEAD
 use Illuminate\Support\Str;
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -34,6 +40,7 @@ class UserController extends Controller
             $query->where('role_id', (int) $request->input('role_id'));
         }
 
+<<<<<<< HEAD
         if ($request->filled('status')) {
             $query->where('status', $request->input('status'));
         }
@@ -46,6 +53,13 @@ class UserController extends Controller
         };
 
         return $this->paginated($request, $query, fn (User $user) => Transform::user($user));
+=======
+        return $this->paginated(
+            $request,
+            $query->orderBy('name'),
+            fn (User $user) => Transform::user($user)
+        );
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
     }
 
     public function store(Request $request): JsonResponse
@@ -53,6 +67,7 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+<<<<<<< HEAD
             'password' => ['nullable', 'string', 'min:8'],
             'phone' => ['nullable', 'string', 'max:255'],
             'role_id' => ['required', 'exists:roles,id'],
@@ -75,11 +90,30 @@ class UserController extends Controller
             'role_id' => $data['role_id'],
             'status' => $status,
             'is_active' => $status === User::STATUS_ACTIVE,
+=======
+            'password' => ['required', 'string', 'min:6'],
+            'phone' => ['nullable', 'string', 'max:255'],
+            'role_id' => ['required', 'exists:roles,id'],
+            'is_active' => ['nullable', 'boolean'],
+        ]);
+
+        $user = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'phone' => $data['phone'] ?? null,
+            'role_id' => $data['role_id'],
+            'is_active' => $data['is_active'] ?? true,
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
         ]);
 
         $user->load(['role.permissions', 'patient', 'doctor']);
 
+<<<<<<< HEAD
         AuditLogger::log('created', "User {$user->email} created", $user, null, ['status' => $status]);
+=======
+        AuditLogger::log('created', "User {$user->email} created", $user);
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 
         return $this->ok(Transform::user($user));
     }
@@ -89,6 +123,7 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => ['sometimes', 'required', 'string', 'max:255'],
             'email' => ['sometimes', 'required', 'string', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user->id)],
+<<<<<<< HEAD
             'password' => ['nullable', 'string', 'min:8'],
             'phone' => ['nullable', 'string', 'max:255'],
             'role_id' => ['sometimes', 'required', 'exists:roles,id'],
@@ -115,18 +150,31 @@ class UserController extends Controller
 
         $old = $user->only(array_keys($data));
         $old['status'] = $user->status;
+=======
+            'password' => ['nullable', 'string', 'min:6'],
+            'phone' => ['nullable', 'string', 'max:255'],
+            'role_id' => ['sometimes', 'required', 'exists:roles,id'],
+            'is_active' => ['sometimes', 'boolean'],
+        ]);
+
+        $old = $user->only(array_keys($data));
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
         unset($old['password']);
 
         if (array_key_exists('password', $data)) {
             if ($data['password'] !== null) {
                 $user->password = Hash::make($data['password']);
+<<<<<<< HEAD
                 $user->tokens()->delete();
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
             }
 
             unset($data['password'], $old['password']);
         }
 
         $user->fill($data)->save();
+<<<<<<< HEAD
 
         if ($targetStatus !== null && $targetStatus !== $user->status) {
             $user->setStatus($targetStatus);
@@ -136,6 +184,11 @@ class UserController extends Controller
 
         $new = $user->only(array_keys($data));
         $new['status'] = $user->status;
+=======
+        $user->load(['role.permissions', 'patient', 'doctor']);
+
+        $new = $user->only(array_keys($data));
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
         unset($new['password']);
 
         AuditLogger::log('updated', "User {$user->email} updated", $user, $old, $new);
@@ -143,6 +196,7 @@ class UserController extends Controller
         return $this->ok(Transform::user($user));
     }
 
+<<<<<<< HEAD
     /**
      * Suspend an account: it can no longer sign in, every session token is
      * revoked, and the reason is stored for the audit trail.
@@ -440,4 +494,28 @@ class UserController extends Controller
             'message' => 'The last active Super Administrator cannot be demoted or deactivated. Promote another account first.',
         ], 400);
     }
+=======
+    public function destroy(Request $request, User $user): JsonResponse
+    {
+        if ($user->id === $request->user()?->id) {
+            return response()->json([
+                'message' => 'You cannot delete your own account.',
+            ], 400);
+        }
+
+        if ($user->role?->name === 'admin') {
+            return response()->json([
+                'message' => 'Admin accounts cannot be deleted.',
+            ], 400);
+        }
+
+        $email = $user->email;
+
+        $user->delete();
+
+        AuditLogger::log('deleted', "User {$email} deleted");
+
+        return $this->message("User {$email} deleted.");
+    }
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 }

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Transformers\Transform;
+<<<<<<< HEAD
 use App\Models\Invoice;
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 use App\Models\Medicine;
 use App\Models\MedicineBatch;
 use App\Models\PharmacyTransaction;
@@ -11,7 +14,10 @@ use App\Models\Prescription;
 use App\Models\Visit;
 use App\Support\AuditLogger;
 use App\Support\GeneratesSequentialNumber;
+<<<<<<< HEAD
 use App\Support\VisitWorkflow;
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -38,10 +44,13 @@ class PrescriptionController extends Controller
             $query->where('patient_id', $request->input('patient_id'));
         }
 
+<<<<<<< HEAD
         if ($request->filled('visit_id')) {
             $query->where('visit_id', (int) $request->input('visit_id'));
         }
 
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
         if ($request->filled('doctor_id')) {
             $query->where('doctor_id', $request->input('doctor_id'));
         }
@@ -91,13 +100,18 @@ class PrescriptionController extends Controller
             'items.*.instructions' => ['nullable', 'string'],
         ]);
 
+<<<<<<< HEAD
         $visit = ($data['visit_id'] ?? null) ? Visit::find($data['visit_id']) : null;
+=======
+        $visit = $data['visit_id'] ? Visit::find($data['visit_id']) : null;
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
         $doctorId = $data['doctor_id'] ?? $visit?->doctor_id ?? $request->user()?->doctor?->id;
 
         if (! $doctorId) {
             return response()->json(['message' => 'Doctor is required to create a prescription.'], 422);
         }
 
+<<<<<<< HEAD
         // Smooth handoff guards: prescription must belong to the case patient,
         // the case must be with the doctor, and stock must cover every line so
         // the pharmacy handoff never dead-ends.
@@ -143,6 +157,8 @@ class PrescriptionController extends Controller
             }
         }
 
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
         $prescription = DB::transaction(function () use ($data, $doctorId) {
             $prescription = Prescription::create([
                 'prescription_number' => $this->next('RX', 'prescriptions', 'prescription_number'),
@@ -178,6 +194,7 @@ class PrescriptionController extends Controller
 
         AuditLogger::log('created', "Prescription {$prescription->prescription_number} created", $prescription);
 
+<<<<<<< HEAD
         VisitWorkflow::advanceVisit(
             $prescription->visit_id,
             'prescription_created',
@@ -185,6 +202,8 @@ class PrescriptionController extends Controller
             "Prescription {$prescription->prescription_number} created."
         );
 
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
         return $this->ok(Transform::prescription($prescription->load(['patient', 'doctor.user', 'doctor.department', 'items', 'dispenser'])));
     }
 
@@ -230,6 +249,7 @@ class PrescriptionController extends Controller
             $prescription->only(['status'])
         );
 
+<<<<<<< HEAD
         if ($prescription->status === 'processing') {
             VisitWorkflow::advanceVisit(
                 $prescription->visit_id,
@@ -239,6 +259,8 @@ class PrescriptionController extends Controller
             );
         }
 
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
         return $this->ok($this->prescription($prescription));
     }
 
@@ -262,6 +284,7 @@ class PrescriptionController extends Controller
     }
 
     /**
+<<<<<<< HEAD
      * Pharmacist handoff: prepare the bill document for a prescription.
      * Builds invoice lines from current medicine prices plus any unbilled lab
      * tests on the same visit, so the accountant sees one complete cost sheet
@@ -449,11 +472,14 @@ class PrescriptionController extends Controller
     }
 
     /**
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
      * Move a prescription to `dispensed`, decrementing medicine stock and
      * consuming batches FEFO (first-expiry, first-out).
      */
     private function dispense(Request $request, Prescription $prescription): JsonResponse
     {
+<<<<<<< HEAD
         if (! $this->allows($request, 'prescriptions.dispense')) {
             return response()->json(['message' => 'This action is unauthorized.'], 403);
         }
@@ -505,6 +531,8 @@ class PrescriptionController extends Controller
             ], 422);
         }
 
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
         $prescription->load('items');
 
         $required = [];
@@ -601,6 +629,7 @@ class PrescriptionController extends Controller
             $prescription->only(['status', 'dispensed_by', 'dispensed_at'])
         );
 
+<<<<<<< HEAD
         VisitWorkflow::advanceVisit(
             $prescription->visit_id,
             'medication_dispensed',
@@ -608,6 +637,8 @@ class PrescriptionController extends Controller
             "Prescription {$prescription->prescription_number} dispensed."
         );
 
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
         return $this->ok($this->prescription($prescription));
     }
 
@@ -618,6 +649,7 @@ class PrescriptionController extends Controller
         return Transform::prescription($prescription);
     }
 
+<<<<<<< HEAD
     public function pdf(Prescription $prescription)
     {
         $prescription->loadMissing(['patient', 'doctor.user', 'doctor.department', 'items.medicine', 'dispenser']);
@@ -655,6 +687,8 @@ class PrescriptionController extends Controller
         return $pdf->download($prescription->prescription_number.'.pdf');
     }
 
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
     /**
      * Patient-portal callers may only touch their own prescriptions.
      */
@@ -670,6 +704,27 @@ class PrescriptionController extends Controller
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Id of the patients row owned by the caller (null for staff accounts).
+     */
+    private function portalPatientId(Request $request): ?int
+    {
+        $user = $request->user();
+
+        if (! $user) {
+            return null;
+        }
+
+        if ($this->isPatientPortal($request)) {
+            return (int) $user->patient_id;
+        }
+
+        return $user->patient?->id;
+    }
+
+    /**
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
      * Doctors only see their own prescriptions (admins see everything).
      */
     private function callerDoctorId(Request $request): ?int

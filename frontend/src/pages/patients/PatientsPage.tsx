@@ -14,7 +14,11 @@ import { SearchInput } from '@/components/ui/SearchInput'
 import { Select } from '@/components/ui/Select'
 import { StatCard } from '@/components/ui/StatCard'
 import { Table, type Column } from '@/components/ui/Table'
+<<<<<<< HEAD
 import { Can } from '@/components/auth/Can'
+=======
+import { useAuth } from '@/contexts/AuthContext'
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 import { useDebounce, usePagination } from '@/hooks'
 import type { Patient } from '@/types'
 import { formatDate } from '@/utils/format'
@@ -56,6 +60,10 @@ const columns: Column<Patient>[] = [
 
 export default function PatientsPage() {
   const navigate = useNavigate()
+<<<<<<< HEAD
+=======
+  const { hasPermission } = useAuth()
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   const { setPage, resetPage, query } = usePagination()
   const [search, setSearch] = useState('')
   const [gender, setGender] = useState('')
@@ -86,17 +94,30 @@ export default function PatientsPage() {
     retry: 0,
   })
 
+<<<<<<< HEAD
+=======
+  const canCreate = hasPermission('patients.create')
+
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   return (
     <div className="space-y-6">
       <PageHeader
         title="Patients"
         subtitle="Register, search and manage patient records"
         actions={
+<<<<<<< HEAD
           <Can permission="patients.create">
             <Button icon={<UserPlus size={16} />} onClick={() => setRegisterOpen(true)}>
               Register Patient
             </Button>
           </Can>
+=======
+          canCreate ? (
+            <Button icon={<UserPlus size={16} />} onClick={() => setRegisterOpen(true)}>
+              Register Patient
+            </Button>
+          ) : undefined
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
         }
       />
 

@@ -13,5 +13,8 @@ export { insuranceApi, type ClaimListQuery, type CompanyListQuery, type PatientI
 export { reportApi, type ReportRange, type ReportType } from './report.api'
 export { userApi, type UserListQuery, type RoleInput } from './user.api'
 export { notificationApi } from './notification.api'
+<<<<<<< HEAD
 export { searchApi, type SearchHit, type SearchResults, type SearchScope } from './search.api'
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 export { miscApi, type AuditListQuery, type DoctorListQuery } from './misc.api'

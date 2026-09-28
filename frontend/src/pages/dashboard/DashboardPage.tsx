@@ -15,7 +15,10 @@ import {
   Wallet,
 } from 'lucide-react'
 import { dashboardApi } from '@/api/dashboard.api'
+<<<<<<< HEAD
 import { workflowApi } from '@/api/workflow.api'
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 import { AreaChartCard, PieChartCard } from '@/components/charts'
 import { Panel, PanelRow } from '@/components/modules/overview/Panel'
 import { statIcon } from '@/components/modules/overview/statIcons'
@@ -36,7 +39,10 @@ import type {
   Medicine,
   Patient,
   Prescription,
+<<<<<<< HEAD
   WorkflowTask,
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 } from '@/types'
 import { cn } from '@/utils/cn'
 import { formatCurrency, formatDate, formatTime, setCurrency, statusLabel } from '@/utils/format'
@@ -59,6 +65,7 @@ interface DashboardPayload {
 
 const ROWS_PER_PANEL = 6
 
+<<<<<<< HEAD
 /** §18 queue widgets: every role sees its pending handoffs, not a search box. */
 function TasksPanel({ tasks, loading }: { tasks: WorkflowTask[] | undefined; loading: boolean }) {
   if (loading || !tasks || tasks.length === 0) return null
@@ -83,6 +90,8 @@ function TasksPanel({ tasks, loading }: { tasks: WorkflowTask[] | undefined; loa
   )
 }
 
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 function formatStatValue(value: number | string): string {
   return typeof value === 'number' ? value.toLocaleString('en-US') : value
 }
@@ -135,6 +144,7 @@ export default function DashboardPage() {
     staleTime: 30_000,
   })
 
+<<<<<<< HEAD
   const { data: tasks, isLoading: loadingTasks } = useQuery({
     queryKey: ['workflow', 'summary'],
     queryFn: () => workflowApi.summary(),
@@ -142,6 +152,8 @@ export default function DashboardPage() {
     retry: 0,
   })
 
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   const payload: DashboardPayload | undefined = data
 
   useEffect(() => {
@@ -456,8 +468,11 @@ export default function DashboardPage() {
         />
       ) : (
         <div className="space-y-5">
+<<<<<<< HEAD
           <TasksPanel tasks={tasks} loading={loadingTasks} />
 
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
           {stats.length > 0 && (
             <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
               {stats.map((stat, index) => (

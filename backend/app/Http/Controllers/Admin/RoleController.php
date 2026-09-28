@@ -119,18 +119,27 @@ class RoleController extends Controller
             'label' => ['required', 'string', 'max:100'],
             'description' => ['nullable', 'string'],
             'permissions' => ['required', 'array'],
+<<<<<<< HEAD
             // Frontend sends permission IDs; API contract documents names.
             // Accept both so RolesPage and API clients work.
             'permissions.*' => ['required'],
+=======
+            'permissions.*' => ['string', Rule::in(Permission::pluck('name')->all())],
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
         ]);
     }
 
     /**
+<<<<<<< HEAD
      * @param  array<int, string|int>  $permissions
+=======
+     * @param  array<int, string>  $permissions
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
      * @return array<int, int>
      */
     private function permissionIds(array $permissions): array
     {
+<<<<<<< HEAD
         $ids = [];
         $names = [];
 
@@ -147,5 +156,8 @@ class RoleController extends Controller
         }
 
         return array_values(array_unique($ids));
+=======
+        return Permission::whereIn('name', $permissions)->pluck('id')->all();
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
     }
 }

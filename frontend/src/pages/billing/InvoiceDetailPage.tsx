@@ -1,11 +1,17 @@
 import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+<<<<<<< HEAD
 import { ArrowLeft, BadgeCheck, CreditCard, Download, Pencil, Printer, Stethoscope } from 'lucide-react'
 import { getFieldErrors, getErrorMessage } from '@/api/client'
 import { billingApi } from '@/api/billing.api'
 import { downloadBlob } from '@/utils/download'
 import { Alert } from '@/components/ui/Alert'
+=======
+import { ArrowLeft, CreditCard, Pencil, Printer } from 'lucide-react'
+import { getFieldErrors, getErrorMessage } from '@/api/client'
+import { billingApi } from '@/api/billing.api'
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 import { miscApi } from '@/api/misc.api'
 import { Badge, type BadgeTone } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
@@ -18,7 +24,10 @@ import { PageLoader } from '@/components/ui/Spinner'
 import { Select } from '@/components/ui/Select'
 import { StatusBadge } from '@/components/ui/StatusBadge'
 import { Table, type Column } from '@/components/ui/Table'
+<<<<<<< HEAD
 import { Textarea } from '@/components/ui/Textarea'
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 import { useToast } from '@/components/ui/Toast'
 import { InvoiceFormModal } from '@/components/modules/finance/InvoiceFormModal'
 import { useAuth } from '@/contexts/AuthContext'
@@ -147,6 +156,7 @@ export default function InvoiceDetailPage() {
   const { hasPermission } = useAuth()
   const [paying, setPaying] = useState(false)
   const [editing, setEditing] = useState(false)
+<<<<<<< HEAD
   const [downloading, setDownloading] = useState(false)
   const toast = useToast()
 
@@ -161,6 +171,8 @@ export default function InvoiceDetailPage() {
       setDownloading(false)
     }
   }
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 
   const { data: invoice, isLoading } = useQuery({
     queryKey: ['invoice', invoiceId],
@@ -175,6 +187,7 @@ export default function InvoiceDetailPage() {
     retry: 0,
   })
 
+<<<<<<< HEAD
   const [approving, setApproving] = useState(false)
   const [approvalNotes, setApprovalNotes] = useState('')
   const queryClient = useQueryClient()
@@ -194,6 +207,8 @@ export default function InvoiceDetailPage() {
     onError: (caught) => toast.error('Unable to approve payment', getErrorMessage(caught)),
   })
 
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   if (isLoading || !invoice) {
     if (isLoading) return <PageLoader label="Loading invoice…" />
     return (
@@ -214,6 +229,7 @@ export default function InvoiceDetailPage() {
 
   const canPay = hasPermission('billing.payment.manage') && invoice.balance > 0 && invoice.status !== 'cancelled'
   const canEdit = hasPermission('billing.invoice.edit') && invoice.status === 'unpaid'
+<<<<<<< HEAD
   // Approval is a separate decision from recording the cash: it is the gate
   // that releases the medication to the patient.
   const canApprove =
@@ -222,6 +238,8 @@ export default function InvoiceDetailPage() {
     invoice.status !== 'cancelled' &&
     invoice.balance <= 0.001
   const awaitingApproval = !invoice.is_approved && invoice.balance <= 0.001 && invoice.status !== 'cancelled'
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 
   const paymentColumns: Column<Payment>[] = [
     { key: 'payment_number', header: 'Receipt', render: (row) => <span className="font-medium">{row.payment_number}</span> },
@@ -238,6 +256,7 @@ export default function InvoiceDetailPage() {
 
   return (
     <div className="space-y-6">
+<<<<<<< HEAD
       {invoice.visit_id != null && (
         <Alert tone="info" title="Linked consultation case">
           <span className="flex flex-wrap items-center gap-2">
@@ -273,6 +292,8 @@ export default function InvoiceDetailPage() {
           clear you approve the payment, which releases the medicines.
         </Alert>
       )}
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
       <div className="print:hidden">
         <PageHeader
           title={invoice.invoice_number}
@@ -290,19 +311,25 @@ export default function InvoiceDetailPage() {
               <Button variant="outline" size="sm" icon={<Printer size={15} />} onClick={() => window.print()}>
                 Print
               </Button>
+<<<<<<< HEAD
               <Button variant="outline" size="sm" icon={<Download size={15} />} loading={downloading} onClick={() => void downloadPdf()}>
                 PDF
               </Button>
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
               {canPay && (
                 <Button size="sm" icon={<CreditCard size={15} />} onClick={() => setPaying(true)}>
                   Record payment
                 </Button>
               )}
+<<<<<<< HEAD
               {canApprove && (
                 <Button size="sm" icon={<BadgeCheck size={15} />} onClick={() => setApproving(true)}>
                   Approve payment
                 </Button>
               )}
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
             </>
           }
         />
@@ -480,6 +507,7 @@ export default function InvoiceDetailPage() {
                 <dt className="text-muted-foreground">Insurance</dt>
                 <dd className="font-medium text-foreground">{formatCurrency(invoice.insurance_covered)}</dd>
               </div>
+<<<<<<< HEAD
               <div className="flex items-center justify-between gap-4">
                 <dt className="text-muted-foreground">Approval</dt>
                 <dd className="font-medium text-foreground">
@@ -493,6 +521,9 @@ export default function InvoiceDetailPage() {
                 {invoice.approved_at ? ` on ${formatDateTime(invoice.approved_at)}` : ''}.
               </p>
             )}
+=======
+            </dl>
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
           </div>
 
           <Link
@@ -505,6 +536,7 @@ export default function InvoiceDetailPage() {
       </div>
 
       {paying && canPay && <PaymentModal invoice={invoice} onClose={() => setPaying(false)} />}
+<<<<<<< HEAD
       {approving && canApprove && (
         <Modal
           open
@@ -547,6 +579,8 @@ export default function InvoiceDetailPage() {
           </div>
         </Modal>
       )}
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
       {canEdit && (
         <InvoiceFormModal open={editing} invoice={invoice} onClose={() => setEditing(false)} onSaved={() => setEditing(false)} />
       )}

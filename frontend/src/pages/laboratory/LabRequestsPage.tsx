@@ -1,5 +1,9 @@
 import { useMemo, useState } from 'react'
+<<<<<<< HEAD
 import { useNavigate, useSearchParams } from 'react-router-dom'
+=======
+import { useNavigate } from 'react-router-dom'
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 import { useQuery } from '@tanstack/react-query'
 import { FlaskConical, Plus } from 'lucide-react'
 import { labApi } from '@/api/lab.api'
@@ -37,11 +41,18 @@ export default function LabRequestsPage() {
   const { hasPermission } = useAuth()
   const canRequest = hasPermission('lab.request')
   const navigate = useNavigate()
+<<<<<<< HEAD
   const [searchParams] = useSearchParams()
 
   const [search, setSearch] = useState('')
   const [status, setStatus] = useState(searchParams.get('status') ?? '')
   const [priority, setPriority] = useState(searchParams.get('priority') ?? '')
+=======
+
+  const [search, setSearch] = useState('')
+  const [status, setStatus] = useState('')
+  const [priority, setPriority] = useState('')
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   const [date, setDate] = useState('')
   const [formOpen, setFormOpen] = useState(false)
 

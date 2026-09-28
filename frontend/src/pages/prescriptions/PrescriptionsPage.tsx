@@ -1,5 +1,9 @@
 import { useMemo, useState } from 'react'
+<<<<<<< HEAD
 import { useNavigate, useSearchParams } from 'react-router-dom'
+=======
+import { useNavigate } from 'react-router-dom'
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { Pill, Plus } from 'lucide-react'
 import { prescriptionApi } from '@/api/prescription.api'
@@ -42,11 +46,18 @@ const columns: Column<Prescription>[] = [
 
 export default function PrescriptionsPage() {
   const navigate = useNavigate()
+<<<<<<< HEAD
   const [searchParams] = useSearchParams()
   const { hasPermission } = useAuth()
   const { setPage, resetPage, query } = usePagination()
   const [search, setSearch] = useState('')
   const [status, setStatus] = useState(searchParams.get('status') ?? '')
+=======
+  const { hasPermission } = useAuth()
+  const { setPage, resetPage, query } = usePagination()
+  const [search, setSearch] = useState('')
+  const [status, setStatus] = useState('')
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   const [builderOpen, setBuilderOpen] = useState(false)
   const debouncedSearch = useDebounce(search, 350)
 

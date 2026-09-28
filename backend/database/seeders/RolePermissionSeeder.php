@@ -47,7 +47,10 @@ class RolePermissionSeeder extends Seeder
         ['billing.invoice.create', 'Create Invoices', 'billing'],
         ['billing.invoice.edit', 'Edit Invoices', 'billing'],
         ['billing.payment.manage', 'Manage Payments', 'billing'],
+<<<<<<< HEAD
         ['billing.payment.approve', 'Approve Payments', 'billing'],
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
         ['insurance.view', 'View Insurance', 'insurance'],
         ['insurance.manage', 'Manage Insurance', 'insurance'],
         ['reports.view', 'View Reports', 'reports'],
@@ -61,6 +64,7 @@ class RolePermissionSeeder extends Seeder
     ];
 
     /**
+<<<<<<< HEAD
      * Ordered from highest to lowest privilege. Any number of users may hold
      * each role — roles are templates, not single accounts.
      *
@@ -68,6 +72,11 @@ class RolePermissionSeeder extends Seeder
      */
     private const ROLE_LABELS = [
         'super_admin' => 'Super Administrator',
+=======
+     * @var array<string, string>
+     */
+    private const ROLE_LABELS = [
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
         'admin' => 'Administrator',
         'doctor' => 'Doctor',
         'nurse' => 'Nurse',
@@ -79,6 +88,7 @@ class RolePermissionSeeder extends Seeder
     ];
 
     /**
+<<<<<<< HEAD
      * The operational Administrator runs the hospital but must not be able to
      * rewrite the role/permission architecture itself — that is reserved for
      * the Super Administrator.
@@ -88,6 +98,8 @@ class RolePermissionSeeder extends Seeder
     private const ADMIN_EXCLUDED = ['roles.manage'];
 
     /**
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
      * @var array<string, array<int, string>>
      */
     private const ROLE_PERMISSIONS = [
@@ -112,16 +124,23 @@ class RolePermissionSeeder extends Seeder
             'dashboard.view',
             'patients.view', 'patients.create', 'patients.edit', 'patients.delete', 'patients.documents',
             'appointments.view', 'appointments.create', 'appointments.edit', 'appointments.cancel',
+<<<<<<< HEAD
             'consultation.view',
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
             'billing.view', 'billing.invoice.create',
             'insurance.view', 'doctors.view', 'departments.view',
         ],
         'pharmacist' => [
             'dashboard.view', 'pharmacy.view', 'pharmacy.manage',
             'prescriptions.view', 'prescriptions.create', 'prescriptions.dispense',
+<<<<<<< HEAD
             'patients.view', 'consultation.view',
             'billing.view', 'billing.invoice.create',
             'lab.view',
+=======
+            'patients.view',
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
         ],
         'lab_technician' => [
             'dashboard.view', 'lab.view', 'lab.request', 'lab.process',
@@ -129,6 +148,7 @@ class RolePermissionSeeder extends Seeder
         ],
         'accountant' => [
             'dashboard.view',
+<<<<<<< HEAD
             'billing.view', 'billing.invoice.create', 'billing.invoice.edit', 'billing.payment.manage', 'billing.payment.approve',
             'insurance.view', 'insurance.manage',
             'reports.view', 'patients.view',
@@ -173,6 +193,48 @@ class RolePermissionSeeder extends Seeder
             };
 
             $role->permissions()->sync($permissions->only($granted)->values()->all());
+=======
+            'billing.view', 'billing.invoice.create', 'billing.invoice.edit', 'billing.payment.manage',
+            'insurance.view', 'insurance.manage',
+            'reports.view', 'patients.view',
+        ],
+        'patient' => [
+            'dashboard.view', 'patients.view',
+        ],
+    ];
+
+    public function run(): void
+    {
+        if (Role::query()->exists()) {
+            return;
+        }
+
+        $permissions = collect(self::PERMISSIONS)
+            ->mapWithKeys(function (array $permission) {
+                $permission = Permission::create([
+                    'name' => $permission[0],
+                    'label' => $permission[1],
+                    'group' => $permission[2],
+                ]);
+
+                return [$permission->name => $permission->id];
+            });
+
+        $all = $permissions->values();
+
+        foreach (self::ROLE_LABELS as $name => $label) {
+            $role = Role::create([
+                'name' => $name,
+                'label' => $label,
+                'description' => "{$label} role",
+            ]);
+
+            $ids = $name === 'admin'
+                ? $all
+                : $permissions->only(self::ROLE_PERMISSIONS[$name])->values();
+
+            $role->permissions()->sync($ids->all());
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
         }
     }
 }

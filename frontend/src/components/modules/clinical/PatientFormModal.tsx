@@ -1,9 +1,14 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+<<<<<<< HEAD
 import { ClipboardList } from 'lucide-react'
 import { getFieldErrors, getErrorMessage } from '@/api/client'
 import { patientApi } from '@/api/patient.api'
 import { IntakeModal } from '@/components/modules/clinical/IntakeModal'
+=======
+import { getFieldErrors, getErrorMessage } from '@/api/client'
+import { patientApi } from '@/api/patient.api'
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 import { Alert } from '@/components/ui/Alert'
 import { Button } from '@/components/ui/Button'
 import { FormField } from '@/components/ui/FormField'
@@ -75,15 +80,21 @@ export function PatientFormModal({ open, onClose, patient }: PatientFormModalPro
   const [form, setForm] = useState<FormState>(EMPTY_FORM)
   const [errors, setErrors] = useState<Record<string, string[]>>({})
   const [formError, setFormError] = useState<string | null>(null)
+<<<<<<< HEAD
   const [savedPatient, setSavedPatient] = useState<Patient | null>(null)
   const [intakeOpen, setIntakeOpen] = useState(false)
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 
   useEffect(() => {
     if (!open) return
     setForm(toForm(patient))
     setErrors({})
     setFormError(null)
+<<<<<<< HEAD
     setSavedPatient(null)
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   }, [open, patient])
 
   const set = <K extends keyof FormState>(key: K, value: FormState[K]) =>
@@ -96,6 +107,7 @@ export function PatientFormModal({ open, onClose, patient }: PatientFormModalPro
       toast.success(patient ? 'Patient updated' : 'Patient registered', `${saved.full_name} · ${saved.patient_number}`)
       queryClient.invalidateQueries({ queryKey: ['patients'] })
       queryClient.invalidateQueries({ queryKey: ['patient', saved.id] })
+<<<<<<< HEAD
       if (patient) {
         onClose()
       } else {
@@ -104,6 +116,9 @@ export function PatientFormModal({ open, onClose, patient }: PatientFormModalPro
         // losing the patient in the list.
         setSavedPatient(saved)
       }
+=======
+      onClose()
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
     },
     onError: (caught) => {
       const fieldErrors = getFieldErrors(caught)
@@ -142,6 +157,7 @@ export function PatientFormModal({ open, onClose, patient }: PatientFormModalPro
     })
   }
 
+<<<<<<< HEAD
   const closeAll = () => {
     setSavedPatient(null)
     onClose()
@@ -186,6 +202,20 @@ export function PatientFormModal({ open, onClose, patient }: PatientFormModalPro
           </p>
         </div>
       ) : (
+=======
+  return (
+    <Modal
+      open={open}
+      onClose={onClose}
+      size="lg"
+      title={patient ? 'Edit patient' : 'Register patient'}
+      description={
+        patient
+          ? `Update the record for ${patient.full_name}`
+          : 'Create a new patient record — name, gender, date of birth and phone are required'
+      }
+    >
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
       <form onSubmit={onSubmit} className="flex flex-col gap-4">
         {formError && <Alert tone="danger">{formError}</Alert>}
 
@@ -309,7 +339,11 @@ export function PatientFormModal({ open, onClose, patient }: PatientFormModalPro
         </FormField>
 
         <div className="flex justify-end gap-2.5 border-t pt-4">
+<<<<<<< HEAD
           <Button variant="outline" onClick={closeAll} disabled={mutation.isPending}>
+=======
+          <Button variant="outline" onClick={onClose} disabled={mutation.isPending}>
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
             Cancel
           </Button>
           <Button type="submit" loading={mutation.isPending}>
@@ -317,6 +351,7 @@ export function PatientFormModal({ open, onClose, patient }: PatientFormModalPro
           </Button>
         </div>
       </form>
+<<<<<<< HEAD
       )}
     </Modal>
     {savedPatient && (
@@ -330,6 +365,9 @@ export function PatientFormModal({ open, onClose, patient }: PatientFormModalPro
       />
     )}
     </>
+=======
+    </Modal>
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   )
 }
 

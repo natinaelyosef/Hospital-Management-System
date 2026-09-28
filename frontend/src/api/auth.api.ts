@@ -1,5 +1,9 @@
 import client, { unwrap } from './client'
+<<<<<<< HEAD
 import type { LoginResponse, Portal, PortalProbe, SuggestedDepartment, User, Visit } from '@/types'
+=======
+import type { LoginResponse, User } from '@/types'
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 
 export interface ProfilePayload {
   name?: string
@@ -13,6 +17,7 @@ export interface PasswordPayload {
   password_confirmation: string
 }
 
+<<<<<<< HEAD
 export interface RegisterPayload {
   first_name: string
   last_name: string
@@ -78,13 +83,25 @@ export const authApi = {
     return unwrap<RegisterResponse>(res)
   },
 
+=======
+export const authApi = {
+  async login(email: string, password: string): Promise<LoginResponse> {
+    const res = await client.post('/auth/login', { email, password })
+    return unwrap<LoginResponse>(res)
+  },
+
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   async logout(): Promise<void> {
     await client.post('/auth/logout')
   },
 
   async me(): Promise<User> {
     const res = await client.get('/auth/me')
+<<<<<<< HEAD
     return unwrap<User>(res)
+=======
+    return unwrap<{ user: User }>(res).user
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
   },
 
   async updateProfile(payload: ProfilePayload): Promise<User> {
@@ -95,6 +112,7 @@ export const authApi = {
   async changePassword(payload: PasswordPayload): Promise<void> {
     await client.post('/auth/password', payload)
   },
+<<<<<<< HEAD
 
   /** Accept a staff invitation with the single-use token from the invite link. */
   async acceptInvite(payload: AcceptInvitePayload): Promise<LoginResponse> {
@@ -113,4 +131,6 @@ export const authApi = {
     const res = await client.post('/auth/reset-password', payload)
     return unwrap<{ message: string }>(res)
   },
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
 }
