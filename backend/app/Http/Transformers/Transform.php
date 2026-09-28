@@ -45,11 +45,21 @@ class Transform
             'role' => self::role($m->role),
             'patient_id' => $m->patient?->id,
             'doctor_id' => $m->doctor?->id,
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             'status' => $m->status ?? 'active',
             'is_active' => ($m->status ?? 'active') === 'active',
             'suspended_at' => $m->suspended_at?->toIso8601String(),
             'suspension_reason' => $m->suspension_reason,
             'invited_at' => $m->invited_at?->toIso8601String(),
+<<<<<<< HEAD
+=======
+=======
+            'is_active' => (bool) $m->is_active,
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             'last_login_at' => $m->last_login_at?->toIso8601String(),
             'created_at' => $m->created_at?->toIso8601String(),
         ];
@@ -206,6 +216,10 @@ class Transform
             'department_id' => $m->department_id,
             'visit_date' => $m->visit_date instanceof Carbon ? $m->visit_date->toDateString() : $m->visit_date,
             'type' => $m->type,
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             'priority' => $m->priority ?? 'normal',
             'chief_complaint' => $m->chief_complaint,
             'symptoms' => $m->symptoms,
@@ -214,6 +228,13 @@ class Transform
             'previous_conditions' => $m->previous_conditions,
             'current_medications' => $m->current_medications,
             'intake_notes' => $m->intake_notes,
+<<<<<<< HEAD
+=======
+=======
+            'chief_complaint' => $m->chief_complaint,
+            'symptoms' => $m->symptoms,
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             'diagnosis' => $m->diagnosis,
             'treatment' => $m->treatment,
             'medical_notes' => $m->medical_notes,
@@ -221,8 +242,16 @@ class Transform
                 ? ($m->follow_up_date instanceof Carbon ? $m->follow_up_date->toDateString() : $m->follow_up_date)
                 : null,
             'status' => $m->status,
+<<<<<<< HEAD
             'referred_by' => $m->referred_by,
             'referred_at' => $m->referred_at instanceof Carbon ? $m->referred_at->toIso8601String() : $m->referred_at,
+=======
+<<<<<<< HEAD
+            'referred_by' => $m->referred_by,
+            'referred_at' => $m->referred_at instanceof Carbon ? $m->referred_at->toIso8601String() : $m->referred_at,
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             'created_at' => $m->created_at?->toIso8601String(),
             'vital_signs' => $m->relationLoaded('vitalSigns')
                 ? $m->vitalSigns->map(fn ($v) => self::vitalSign($v))->values()->all()
@@ -284,6 +313,10 @@ class Transform
             return null;
         }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         $items = $m->relationLoaded('items')
             ? $m->items->map(function ($i) {
                 $unitPrice = null;
@@ -334,6 +367,11 @@ class Transform
         $outstanding = $invoices->first(fn ($invoice) => in_array($invoice->status, ['unpaid', 'partial'], true));
         $approved = $invoices->first(fn ($invoice) => $invoice->isApproved());
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         return [
             'id' => $m->id,
             'prescription_number' => $m->prescription_number,
@@ -346,6 +384,10 @@ class Transform
             'dispensed_by_name' => $m->dispenser?->name,
             'dispensed_at' => $m->dispensed_at?->toIso8601String(),
             'created_at' => $m->created_at?->toIso8601String(),
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             'items' => $items,
             'estimated_total' => $estimatedTotal,
             'payment_approved' => (bool) $approved,
@@ -361,6 +403,23 @@ class Transform
                 'approved_at' => $approved->approved_at?->toIso8601String(),
                 'approved_by_name' => $approved->approver?->name,
             ] : null,
+<<<<<<< HEAD
+=======
+=======
+            'items' => $m->relationLoaded('items')
+                ? $m->items->map(fn ($i) => [
+                    'id' => $i->id,
+                    'medicine_id' => $i->medicine_id,
+                    'medicine_name' => $i->medicine_name,
+                    'dosage' => $i->dosage,
+                    'frequency' => $i->frequency,
+                    'duration' => $i->duration,
+                    'quantity' => (int) $i->quantity,
+                    'instructions' => $i->instructions,
+                ])->values()->all()
+                : [],
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         ];
     }
 
@@ -449,6 +508,10 @@ class Transform
             return null;
         }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         $results = $m->relationLoaded('results')
             ? $m->results->map(fn ($r) => [
                 'id' => $r->id,
@@ -465,6 +528,11 @@ class Transform
             ])->values()->all()
             : [];
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         return [
             'id' => $m->id,
             'request_number' => $m->request_number,
@@ -476,10 +544,33 @@ class Transform
             'notes' => $m->notes,
             'requested_at' => $m->requested_at?->toIso8601String(),
             'created_at' => $m->created_at?->toIso8601String(),
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             'results' => $results,
             'estimated_cost' => count($results) > 0
                 ? round((float) collect($results)->sum(fn ($r) => (float) ($r['test_price'] ?? 0)), 2)
                 : 0,
+<<<<<<< HEAD
+=======
+=======
+            'results' => $m->relationLoaded('results')
+                ? $m->results->map(fn ($r) => [
+                    'id' => $r->id,
+                    'lab_test_id' => $r->lab_test_id,
+                    'test_name' => $r->test?->name,
+                    'test_code' => $r->test?->code,
+                    'status' => $r->status,
+                    'result_value' => $r->result_value,
+                    'reference_range' => $r->reference_range,
+                    'unit' => $r->unit,
+                    'notes' => $r->notes,
+                    'performed_at' => $r->performed_at?->toIso8601String(),
+                ])->values()->all()
+                : [],
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         ];
     }
 
@@ -573,10 +664,19 @@ class Transform
             'id' => $m->id,
             'invoice_number' => $m->invoice_number,
             'patient' => self::patient($m->patient),
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             'patient_id' => $m->patient_id,
             'visit_id' => $m->visit_id,
             'admission_id' => $m->admission_id,
             'prescription_id' => $m->prescription_id,
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             'sub_total' => (float) $m->sub_total,
             'discount' => (float) $m->discount,
             'tax' => (float) $m->tax,
@@ -587,11 +687,20 @@ class Transform
             'status' => $m->status,
             'notes' => $m->notes,
             'issued_by_name' => $m->issuer?->name,
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             'is_approved' => $m->isApproved(),
             'approved_by_name' => $m->approver?->name,
             'approved_at' => $m->approved_at?->toIso8601String(),
             'approval_notes' => $m->approval_notes,
             'paid_at' => $m->paid_at?->toIso8601String(),
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             'created_at' => $m->created_at?->toIso8601String(),
             'items' => $m->relationLoaded('items')
                 ? $m->items->map(fn ($i) => self::invoiceItem($i))->values()->all()

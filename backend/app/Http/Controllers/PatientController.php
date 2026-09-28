@@ -83,6 +83,10 @@ class PatientController extends Controller
         $email = $data['email'] ?? null;
         unset($data['create_user'], $data['password']);
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         $duplicate = Patient::query()->where('phone', $data['phone'])->first();
 
         if ($duplicate) {
@@ -93,6 +97,11 @@ class PatientController extends Controller
             ], 422);
         }
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         $patient = DB::transaction(function () use ($data, $request, $createUser, $password, $email) {
             if ($createUser && filled($email)) {
                 $user = User::create([
@@ -410,6 +419,30 @@ class PatientController extends Controller
     }
 
     /**
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+     * Id of the patients row owned by the caller (null for staff accounts).
+     */
+    private function portalPatientId(Request $request): ?int
+    {
+        $user = $request->user();
+
+        if (! $user) {
+            return null;
+        }
+
+        if ($this->isPatientPortal($request)) {
+            return (int) $user->patient_id;
+        }
+
+        return $user->patient?->id;
+    }
+
+    /**
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
      * @return array<string, mixed>
      */
     private function documentShape(PatientDocument $document): array

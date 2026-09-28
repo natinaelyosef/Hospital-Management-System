@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Invoice extends Model
 {
     protected $fillable = [
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         'invoice_number', 'patient_id', 'visit_id', 'admission_id', 'prescription_id',
         'sub_total', 'discount', 'tax', 'total', 'paid_amount', 
         'insurance_covered', 'status', 'notes', 'issued_by', 'paid_at',
@@ -44,6 +48,16 @@ class Invoice extends Model
         return round((float) $this->total - (float) $this->paid_amount, 2);
     }
 
+<<<<<<< HEAD
+=======
+=======
+        'invoice_number', 'patient_id', 'visit_id', 'admission_id', 
+        'sub_total', 'discount', 'tax', 'total', 'paid_amount', 
+        'insurance_covered', 'status', 'notes', 'issued_by', 'paid_at'
+    ];
+
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     public function patient(): BelongsTo
     {
         return $this->belongsTo(Patient::class);
@@ -58,6 +72,10 @@ class Invoice extends Model
     {
         return $this->hasMany(Payment::class);
     }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
     public function issuer(): BelongsTo
     {
@@ -85,4 +103,9 @@ class Invoice extends Model
     {
         return $this->belongsTo(Admission::class);
     }
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 }

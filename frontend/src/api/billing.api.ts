@@ -9,7 +9,14 @@ export interface InvoiceListQuery {
   search?: string
   date?: string
   patient_id?: number
+<<<<<<< HEAD
   visit_id?: number
+=======
+<<<<<<< HEAD
+  visit_id?: number
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 }
 
 export interface InvoiceInput {
@@ -60,6 +67,10 @@ export const billingApi = {
     return unwrap<Payment>(res)
   },
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   /**
    * The accountant's explicit approval of a settled invoice. This is what
    * releases the medication to the patient — recording the cash is not enough.
@@ -69,6 +80,11 @@ export const billingApi = {
     return unwrap<Invoice>(res)
   },
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   async invoicePdf(id: number): Promise<Blob> {
     const res = await client.get(`/invoices/${id}/pdf`, { responseType: 'blob' })
     return res.data as Blob

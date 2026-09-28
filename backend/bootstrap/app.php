@@ -19,6 +19,10 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->statefulApi();
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
         $middleware->redirectGuestsTo(fn () => null);
     })
@@ -26,4 +30,12 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->shouldRenderJsonWhen(
             fn ($request, $throwable): bool => $request->is('api/*') || $request->expectsJson()
         );
+<<<<<<< HEAD
+=======
+=======
+    })
+    ->withExceptions(function (Exceptions $exceptions): void {
+        //
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     })->create();

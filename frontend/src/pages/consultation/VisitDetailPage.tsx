@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 import { useMemo, useState, type FormEvent, type ReactNode } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
@@ -10,6 +14,19 @@ import { JourneyTimeline } from '@/components/modules/clinical/JourneyTimeline'
 import { PrescriptionBuilder } from '@/components/modules/clinical/PrescriptionBuilder'
 import { ReferDialog } from '@/components/modules/clinical/ReferDialog'
 import { VisitStepper } from '@/components/modules/clinical/VisitStepper'
+<<<<<<< HEAD
+=======
+=======
+import { useMemo, useState, type FormEvent } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { ArrowLeft, Check, FlaskConical, Heart, NotebookPen, Pill, Plus, Save, Stethoscope, User } from 'lucide-react'
+import { getErrorMessage } from '@/api/client'
+import { labApi } from '@/api/lab.api'
+import { visitApi, type MedicalNoteInput, type VisitInput } from '@/api/visit.api'
+import { PrescriptionBuilder } from '@/components/modules/clinical/PrescriptionBuilder'
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 import { VitalsForm } from '@/components/modules/clinical/VitalsForm'
 import { NOTE_TYPE_OPTIONS } from '@/components/modules/clinical/constants'
 import { Alert } from '@/components/ui/Alert'
@@ -43,6 +60,10 @@ const EMPTY_CLINICAL = {
   follow_up_date: '',
 }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 const TERMINAL_STATUSES = ['visit_completed', 'cancelled']
 
 const CONSULT_STATUSES = ['in_consultation', 'lab_completed', 'waiting_for_doctor']
@@ -165,6 +186,11 @@ function WorkflowActions({ visit }: { visit: Visit }) {
   )
 }
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 function Metric({ label, value, unit }: { label: string; value: number | null; unit: string }) {
   return (
     <div className="flex flex-col gap-0.5 rounded-lg border bg-muted/30 px-3 py-2">
@@ -425,6 +451,10 @@ function ClinicalForm({ visit, canEdit, canComplete }: { visit: Visit; canEdit: 
               Save
             </Button>
           )}
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
           {canComplete && !TERMINAL_STATUSES.includes(visit.status) && (
             <Button
               icon={<Check size={15} />}
@@ -432,6 +462,13 @@ function ClinicalForm({ visit, canEdit, canComplete }: { visit: Visit; canEdit: 
               title={COMPLETABLE_STAGES.includes(visit.status) ? undefined : 'The case cannot be closed from this stage yet.'}
               onClick={() => void completeVisit()}
             >
+<<<<<<< HEAD
+=======
+=======
+          {canComplete && visit.status === 'in_progress' && (
+            <Button icon={<Check size={15} />} onClick={() => void completeVisit()}>
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
               Complete Visit
             </Button>
           )}
@@ -641,7 +678,14 @@ function AddNoteModal({
 
 export default function VisitDetailPage() {
   const { id } = useParams()
+<<<<<<< HEAD
   const navigate = useNavigate()
+=======
+<<<<<<< HEAD
+  const navigate = useNavigate()
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   const visitId = Number(id)
   const { hasPermission } = useAuth()
 
@@ -650,6 +694,13 @@ export default function VisitDetailPage() {
   const [rxOpen, setRxOpen] = useState(false)
   const [labOpen, setLabOpen] = useState(false)
   const [noteOpen, setNoteOpen] = useState(false)
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   const { data: visit, isLoading, isError, refetch } = useQuery({
     queryKey: ['visit', visitId],
     queryFn: () => visitApi.get(visitId),
@@ -668,6 +719,10 @@ export default function VisitDetailPage() {
     enabled: Boolean(visit),
   })
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   const { data: timeline = [], isLoading: loadingTimeline } = useQuery({
     queryKey: ['visit', visitId, 'timeline'],
     queryFn: () => visitApi.timeline(visitId),
@@ -684,11 +739,20 @@ export default function VisitDetailPage() {
   })
   const invoices = invoicesData?.data ?? []
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   const canEdit = hasPermission('consultation.edit')
   const canCreateVitals = hasPermission('consultation.create')
   const canPrescribe = hasPermission('prescriptions.create')
   const canRequestLab = hasPermission('lab.request')
   const canAddNote = hasPermission('consultation.create')
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   const canBill = hasPermission('billing.invoice.create') || hasPermission('prescriptions.create') || hasPermission('prescriptions.dispense')
 
   const queryClient = useQueryClient()
@@ -699,22 +763,50 @@ export default function VisitDetailPage() {
     queryClient.invalidateQueries({ queryKey: ['visit', visitId, 'invoices'] })
     queryClient.invalidateQueries({ queryKey: ['visits'] })
   }
+<<<<<<< HEAD
+=======
+=======
+
+  const queryClient = useQueryClient()
+  const toast = useToast()
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   const recordVitals = async (payload: Parameters<typeof visitApi.recordVitals>[1]) => {
     await visitApi.recordVitals(visitId, payload)
     toast.success('Vitals recorded')
     queryClient.invalidateQueries({ queryKey: ['visit', visitId, 'vitals'] })
+<<<<<<< HEAD
     refreshVisit()
+=======
+<<<<<<< HEAD
+    refreshVisit()
+=======
+    queryClient.invalidateQueries({ queryKey: ['visit', visitId] })
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   }
 
   const sectionItems = useMemo(
     () => [
       { value: 'prescriptions', label: 'Prescriptions', icon: <Pill size={14} />, count: visit?.prescriptions.length },
       { value: 'labs', label: 'Lab Requests', icon: <FlaskConical size={14} />, count: visit?.lab_requests.length },
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
       { value: 'billing', label: 'Billing', icon: <Receipt size={14} />, count: invoices.length },
       { value: 'notes', label: 'Notes', icon: <NotebookPen size={14} />, count: notes.length },
       { value: 'journey', label: 'Journey', icon: <History size={14} /> },
     ],
     [visit, notes.length, invoices.length],
+<<<<<<< HEAD
+=======
+=======
+      { value: 'notes', label: 'Notes', icon: <NotebookPen size={14} />, count: notes.length },
+    ],
+    [visit, notes.length],
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   )
 
   if (isLoading) return <PageLoader label="Loading consultation…" />
@@ -734,7 +826,15 @@ export default function VisitDetailPage() {
       <div className="print:hidden">
         <PageHeader
           title={`Consultation ${visit.visit_number}`}
+<<<<<<< HEAD
           subtitle={`${visit.patient.full_name} · ${formatDate(visit.visit_date)} · ${statusLabel(visit.type)} · ${statusLabel(visit.priority)} priority`}
+=======
+<<<<<<< HEAD
+          subtitle={`${visit.patient.full_name} · ${formatDate(visit.visit_date)} · ${statusLabel(visit.type)} · ${statusLabel(visit.priority)} priority`}
+=======
+          subtitle={`${visit.patient.full_name} · ${formatDate(visit.visit_date)} · ${statusLabel(visit.type)}`}
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
           actions={
             <Link
               to="/consultation"
@@ -746,6 +846,10 @@ export default function VisitDetailPage() {
         />
       </div>
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
       <WorkflowActions visit={visit} />
 
       <VisitStepper status={visit.status} />
@@ -774,19 +878,40 @@ export default function VisitDetailPage() {
         </Alert>
       )}
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,300px)_minmax(0,1fr)] xl:grid-cols-[minmax(0,280px)_minmax(0,320px)_minmax(0,1fr)]">
         <PatientSidebar patient={visit.patient} vitals={vitals} />
         <VitalsPanel
           vitals={vitals}
           loading={loadingVitals}
+<<<<<<< HEAD
           canRecord={canCreateVitals && !TERMINAL_STATUSES.includes(visit.status)}
+=======
+<<<<<<< HEAD
+          canRecord={canCreateVitals && !TERMINAL_STATUSES.includes(visit.status)}
+=======
+          canRecord={canCreateVitals && visit.status === 'in_progress'}
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
           onRecord={() => setVitalsOpen(true)}
         />
         <div className="lg:col-span-2 xl:col-span-1">
           <ClinicalForm
             key={visit.id}
             visit={visit}
+<<<<<<< HEAD
             canEdit={canEdit && CONSULT_STATUSES.includes(visit.status)}
+=======
+<<<<<<< HEAD
+            canEdit={canEdit && CONSULT_STATUSES.includes(visit.status)}
+=======
+            canEdit={canEdit && visit.status === 'in_progress'}
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             canComplete={canEdit}
           />
         </div>
@@ -796,22 +921,42 @@ export default function VisitDetailPage() {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <Tabs items={sectionItems} value={section} onChange={setSection} className="sm:max-w-md" />
           {section === 'prescriptions' && canPrescribe && (
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             <Button
               icon={<Plus size={15} />}
               disabled={!DOCTOR_STAGES.includes(visit.status)}
               title={DOCTOR_STAGES.includes(visit.status) ? undefined : 'Prescriptions are written while the case is with the doctor.'}
               onClick={() => setRxOpen(true)}
             >
+<<<<<<< HEAD
+=======
+=======
+            <Button icon={<Plus size={15} />} onClick={() => setRxOpen(true)}>
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
               New Prescription
             </Button>
           )}
           {section === 'labs' && canRequestLab && (
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             <Button
               icon={<Plus size={15} />}
               disabled={!DOCTOR_STAGES.includes(visit.status)}
               title={DOCTOR_STAGES.includes(visit.status) ? undefined : 'Lab tests are ordered while the case is with the doctor.'}
               onClick={() => setLabOpen(true)}
             >
+<<<<<<< HEAD
+=======
+=======
+            <Button icon={<Plus size={15} />} onClick={() => setLabOpen(true)}>
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
               Request Lab Tests
             </Button>
           )}
@@ -826,13 +971,29 @@ export default function VisitDetailPage() {
           <Table
             columns={prescriptionColumns}
             data={visit.prescriptions}
+<<<<<<< HEAD
             onRowClick={(row) => void navigate(`/prescriptions/${row.id}`)}
             rowKey={(row) => row.id}
+=======
+<<<<<<< HEAD
+            onRowClick={(row) => void navigate(`/prescriptions/${row.id}`)}
+            rowKey={(row) => row.id}
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             empty={
               <EmptyState
                 icon={<Pill size={22} />}
                 title="No prescriptions for this visit"
+<<<<<<< HEAD
                 description={canPrescribe ? 'Create one from the button above — it routes straight to pharmacy.' : undefined}
+=======
+<<<<<<< HEAD
+                description={canPrescribe ? 'Create one from the button above — it routes straight to pharmacy.' : undefined}
+=======
+                description={canPrescribe ? 'Create one from the button above.' : undefined}
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
                 compact
               />
             }
@@ -843,12 +1004,24 @@ export default function VisitDetailPage() {
           <Table
             columns={labColumns}
             data={visit.lab_requests}
+<<<<<<< HEAD
             onRowClick={(row) => void navigate(`/laboratory/requests/${row.id}`)}
             rowKey={(row) => row.id}
+=======
+<<<<<<< HEAD
+            onRowClick={(row) => void navigate(`/laboratory/requests/${row.id}`)}
+            rowKey={(row) => row.id}
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
             empty={<EmptyState icon={<FlaskConical size={22} />} title="No lab requests for this visit" compact />}
           />
         )}
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         {section === 'billing' && (
           <div className="space-y-3">
             {invoices.length === 0 ? (
@@ -883,6 +1056,11 @@ export default function VisitDetailPage() {
           </div>
         )}
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         {section === 'notes' && (
           <Table
             columns={noteColumns}
@@ -891,6 +1069,10 @@ export default function VisitDetailPage() {
             empty={<EmptyState icon={<NotebookPen size={22} />} title="No notes yet" compact />}
           />
         )}
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
         {section === 'journey' && (
           <Card>
@@ -906,6 +1088,11 @@ export default function VisitDetailPage() {
             </CardContent>
           </Card>
         )}
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
       </div>
 
       <VitalsForm open={vitalsOpen} onClose={() => setVitalsOpen(false)} onSubmit={recordVitals} title="Record vitals" />
@@ -915,6 +1102,10 @@ export default function VisitDetailPage() {
         initialPatient={visit.patient}
         visitId={visit.id}
         diagnosis={visit.diagnosis}
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         onCreated={() => {
           refreshVisit()
           setSection('prescriptions')
@@ -930,6 +1121,18 @@ export default function VisitDetailPage() {
         patientId={visit.patient.id}
         visitId={visit.id}
         doctorId={visit.doctor?.id}
+<<<<<<< HEAD
+=======
+=======
+      />
+      <LabRequestModal
+        open={labOpen}
+        onClose={() => setLabOpen(false)}
+        patientId={visit.patient.id}
+        visitId={visit.id}
+        doctorId={visit.doctor.id}
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
       />
       <AddNoteModal open={noteOpen} onClose={() => setNoteOpen(false)} visitId={visit.id} />
     </div>

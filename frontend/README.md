@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 # MediCare HMS frontend
 
 ## Run locally
@@ -22,6 +26,14 @@ npm run dev
 Open the URL Vite prints (usually `http://localhost:5173`).
 
 ## Frontend tooling
+<<<<<<< HEAD
+=======
+=======
+# React + TypeScript + Vite
+
+This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
 Currently, two official plugins are available:
 

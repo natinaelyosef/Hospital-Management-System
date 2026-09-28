@@ -1,4 +1,8 @@
 import client, { unwrap, unwrapPaginated } from './client'
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 import type {
   MedicalNote,
   NoteType,
@@ -11,6 +15,12 @@ import type {
   VisitPriority,
   VisitSeverity,
 } from '@/types'
+<<<<<<< HEAD
+=======
+=======
+import type { MedicalNote, NoteType, Paginated, VitalSign, VitalSignInput, Visit } from '@/types'
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
 export interface VisitListQuery {
   page?: number
@@ -41,6 +51,10 @@ export interface MedicalNoteInput {
   content: string
 }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 export interface IntakeVitals {
   bp_systolic?: number
   bp_diastolic?: number
@@ -82,6 +96,11 @@ export interface ReferPayload {
   notes?: string
 }
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 export const visitApi = {
   async list(query: VisitListQuery = {}): Promise<Paginated<Visit>> {
     const res = await client.get('/visits', { params: query })
@@ -103,6 +122,10 @@ export const visitApi = {
     return unwrap<Visit>(res)
   },
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   async complete(id: number, payload?: { diagnosis?: string; note?: string }): Promise<Visit> {
     const res = await client.post(`/visits/${id}/complete`, payload ?? {})
     return unwrap<Visit>(res)
@@ -156,6 +179,16 @@ export const visitApi = {
     return unwrap<TimelineEntry[]>(res)
   },
 
+<<<<<<< HEAD
+=======
+=======
+  async complete(id: number): Promise<Visit> {
+    const res = await client.post(`/visits/${id}/complete`)
+    return unwrap<Visit>(res)
+  },
+
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   async vitals(id: number): Promise<VitalSign[]> {
     const res = await client.get(`/visits/${id}/vitals`)
     return unwrap<VitalSign[]>(res)

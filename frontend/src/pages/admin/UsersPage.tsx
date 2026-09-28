@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 import { Ban, Check, CheckCircle2, Copy, KeyRound, MailPlus, MoreHorizontal, Pencil, Plus, Send, Trash2, UserCog } from 'lucide-react'
 import { getErrorMessage, getFieldErrors } from '@/api/client'
 import { userApi, type InviteResponse, type UserListQuery } from '@/api/user.api'
@@ -7,6 +11,17 @@ import type { User, UserStatus } from '@/types'
 import { Button } from '@/components/ui/Button'
 import { Checkbox } from '@/components/ui/Checkbox'
 import { Dropdown } from '@/components/ui/Dropdown'
+<<<<<<< HEAD
+=======
+=======
+import { Pencil, Plus, Trash2, UserCog } from 'lucide-react'
+import { getErrorMessage, getFieldErrors } from '@/api/client'
+import { userApi, type UserListQuery } from '@/api/user.api'
+import type { User } from '@/types'
+import { Button } from '@/components/ui/Button'
+import { Checkbox } from '@/components/ui/Checkbox'
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 import { EmptyState } from '@/components/ui/EmptyState'
 import { FormField } from '@/components/ui/FormField'
 import { Input } from '@/components/ui/Input'
@@ -17,13 +32,27 @@ import { SearchInput } from '@/components/ui/SearchInput'
 import { Select } from '@/components/ui/Select'
 import { StatusBadge } from '@/components/ui/StatusBadge'
 import { Table, type Column } from '@/components/ui/Table'
+<<<<<<< HEAD
 import { Textarea } from '@/components/ui/Textarea'
 import { useToast } from '@/components/ui/Toast'
 import { Can } from '@/components/auth/Can'
+=======
+<<<<<<< HEAD
+import { Textarea } from '@/components/ui/Textarea'
+import { useToast } from '@/components/ui/Toast'
+import { Can } from '@/components/auth/Can'
+=======
+import { useToast } from '@/components/ui/Toast'
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 import { useAuth } from '@/contexts/AuthContext'
 import { useConfirm } from '@/hooks/useConfirm'
 import { usePagination } from '@/hooks/usePagination'
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 const STATUS_OPTIONS: Array<{ value: UserStatus | ''; label: string }> = [
   { value: '', label: 'All statuses' },
   { value: 'active', label: 'Active' },
@@ -32,6 +61,11 @@ const STATUS_OPTIONS: Array<{ value: UserStatus | ''; label: string }> = [
   { value: 'pending', label: 'Pending' },
 ]
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 interface UserFormModalProps {
   open: boolean
   user: User | null
@@ -46,7 +80,15 @@ function UserFormModal({ open, user, onClose }: UserFormModalProps) {
   const [password, setPassword] = useState('')
   const [phone, setPhone] = useState('')
   const [roleId, setRoleId] = useState('')
+<<<<<<< HEAD
   const [status, setStatus] = useState<UserStatus>('active')
+=======
+<<<<<<< HEAD
+  const [status, setStatus] = useState<UserStatus>('active')
+=======
+  const [isActive, setIsActive] = useState(true)
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   const [errors, setErrors] = useState<Record<string, string[]>>({})
   const [formError, setFormError] = useState<string | null>(null)
   const { data: roles = [] } = useQuery({ queryKey: ['roles'], queryFn: userApi.roles })
@@ -58,15 +100,33 @@ function UserFormModal({ open, user, onClose }: UserFormModalProps) {
     setPassword('')
     setPhone(user?.phone ?? '')
     setRoleId(user?.role ? String(user.role.id) : '')
+<<<<<<< HEAD
     setStatus(user?.status ?? 'active')
+=======
+<<<<<<< HEAD
+    setStatus(user?.status ?? 'active')
+=======
+    setIsActive(user?.is_active ?? true)
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     setErrors({})
     setFormError(null)
   }, [open, user])
 
   const mutation = useMutation({
     mutationFn: () => user
+<<<<<<< HEAD
       ? userApi.update(user.id, { name: name.trim(), email: email.trim(), phone: phone.trim() || undefined, role_id: Number(roleId), status })
       : userApi.create({ name: name.trim(), email: email.trim(), password, phone: phone.trim() || undefined, role_id: Number(roleId), status }),
+=======
+<<<<<<< HEAD
+      ? userApi.update(user.id, { name: name.trim(), email: email.trim(), phone: phone.trim() || undefined, role_id: Number(roleId), status })
+      : userApi.create({ name: name.trim(), email: email.trim(), password, phone: phone.trim() || undefined, role_id: Number(roleId), status }),
+=======
+      ? userApi.update(user.id, { name: name.trim(), email: email.trim(), phone: phone.trim() || undefined, role_id: Number(roleId), is_active: isActive })
+      : userApi.create({ name: name.trim(), email: email.trim(), password, phone: phone.trim() || undefined, role_id: Number(roleId), is_active: isActive }),
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     onSuccess: async (saved) => {
       await queryClient.invalidateQueries({ queryKey: ['users'] })
       toast.success(user ? 'User updated' : 'User created', saved.name)
@@ -95,7 +155,15 @@ function UserFormModal({ open, user, onClose }: UserFormModalProps) {
       open={open}
       onClose={onClose}
       title={user ? `Edit ${user.name}` : 'Add user'}
+<<<<<<< HEAD
       description="Account details, role assignment and lifecycle status"
+=======
+<<<<<<< HEAD
+      description="Account details, role assignment and lifecycle status"
+=======
+      description="Staff account details and role assignment"
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
       footer={<><Button variant="outline" onClick={onClose} disabled={mutation.isPending}>Cancel</Button><Button onClick={submit} loading={mutation.isPending}>{user ? 'Save changes' : 'Create user'}</Button></>}
     >
       <div className="space-y-4">
@@ -112,11 +180,23 @@ function UserFormModal({ open, user, onClose }: UserFormModalProps) {
         <FormField label="Phone" htmlFor="user-phone" error={errors.phone?.[0]}>
           <Input id="user-phone" value={phone} onChange={(event) => setPhone(event.target.value)} />
         </FormField>
+<<<<<<< HEAD
         <FormField label="Role" htmlFor="user-role" required error={errors.role_id?.[0]} hint="Any number of users may share the same role.">
+=======
+<<<<<<< HEAD
+        <FormField label="Role" htmlFor="user-role" required error={errors.role_id?.[0]} hint="Any number of users may share the same role.">
+=======
+        <FormField label="Role" htmlFor="user-role" required error={errors.role_id?.[0]}>
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
           <Select id="user-role" value={roleId} onChange={(event) => setRoleId(event.target.value)} placeholder="Select a role">
             {roles.map((role) => <option key={role.id} value={role.id}>{role.label}</option>)}
           </Select>
         </FormField>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         <FormField label="Account status" htmlFor="user-status" error={errors.status?.[0]} hint="Only Active accounts can sign in.">
           <Select id="user-status" value={status} onChange={(event) => setStatus(event.target.value as UserStatus)}>
             <option value="active">Active</option>
@@ -130,11 +210,21 @@ function UserFormModal({ open, user, onClose }: UserFormModalProps) {
           </div>
         )}
         {!user && <Checkbox label="Active account" description="Inactive users cannot sign in." checked={status === 'active'} onChange={(event) => setStatus(event.target.checked ? 'active' : 'inactive')} />}
+<<<<<<< HEAD
+=======
+=======
+        <Checkbox label="Active account" description="Inactive users cannot sign in." checked={isActive} onChange={(event) => setIsActive(event.target.checked)} />
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
       </div>
     </Modal>
   )
 }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 interface ReasonModalProps {  open: boolean
   title: string
   description: string
@@ -320,12 +410,23 @@ function InviteLinkModal({ invite, onClose }: { invite: InviteResponse | null; o
 
 export default function UsersPage() {
   const { user: currentUser, hasPermission, hasRole } = useAuth()
+<<<<<<< HEAD
+=======
+=======
+export default function UsersPage() {
+  const { user: currentUser, hasPermission } = useAuth()
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   const confirm = useConfirm()
   const toast = useToast()
   const queryClient = useQueryClient()
   const { setPage, resetPage, query } = usePagination()
   const [term, setTerm] = useState('')
   const [search, setSearch] = useState('')
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   const [roleId, setRoleId] = useState('')
   const [status, setStatus] = useState<UserStatus | ''>('')
   const [editing, setEditing] = useState<User | null>(null)
@@ -345,11 +446,26 @@ export default function UsersPage() {
     status: status || undefined,
   }
   const { data: roles = [] } = useQuery({ queryKey: ['roles'], queryFn: userApi.roles })
+<<<<<<< HEAD
+=======
+=======
+  const [editing, setEditing] = useState<User | null>(null)
+  const [creating, setCreating] = useState(false)
+  const canCreate = hasPermission('users.create')
+  const canEdit = hasPermission('users.edit')
+  const canDelete = hasPermission('users.delete')
+  const params: UserListQuery = { ...query, search: search.trim() || undefined }
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   const { data, isLoading, isFetching } = useQuery({
     queryKey: ['users', params],
     queryFn: () => userApi.list(params),
   })
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   const invalidate = () => queryClient.invalidateQueries({ queryKey: ['users'] })
 
   /** Super Administrator accounts are only manageable by another Super Administrator. */
@@ -409,11 +525,32 @@ export default function UsersPage() {
     if (confirmed) setDeleting(target)
   }
 
+<<<<<<< HEAD
+=======
+=======
+  const remove = async (user: User) => {
+    const confirmed = await confirm({ title: `Remove ${user.name}?`, message: 'This user will no longer be able to sign in.', confirmLabel: 'Remove user', tone: 'destructive' })
+    if (!confirmed) return
+    try {
+      await userApi.remove(user.id)
+      await queryClient.invalidateQueries({ queryKey: ['users'] })
+      toast.success('User removed', user.name)
+    } catch (caught) {
+      toast.error('Unable to remove user', getErrorMessage(caught))
+    }
+  }
+
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
   const columns: Column<User>[] = [
     { key: 'name', header: 'User', render: (row) => <div><p className="font-medium text-foreground">{row.name}</p><p className="text-xs text-muted-foreground">{row.email}</p></div> },
     { key: 'role', header: 'Role', render: (row) => <span>{row.role?.label ?? 'Unassigned'}</span> },
     { key: 'phone', header: 'Phone', render: (row) => <span className="text-muted-foreground">{row.phone ?? '—'}</span>, hideBelow: 'md' },
     { key: 'last_login_at', header: 'Last sign in', render: (row) => <span className="text-muted-foreground">{row.last_login_at ? new Intl.DateTimeFormat(undefined, { dateStyle: 'medium' }).format(new Date(row.last_login_at)) : 'Never'}</span>, hideBelow: 'lg' },
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     {
       key: 'status',
       header: 'Status',
@@ -426,10 +563,20 @@ export default function UsersPage() {
         </span>
       ),
     },
+<<<<<<< HEAD
+=======
+=======
+    { key: 'is_active', header: 'Status', render: (row) => <StatusBadge status={row.is_active ? 'active' : 'inactive'} /> },
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     ...((canEdit || canDelete) ? [{
       key: 'actions',
       header: '',
       align: 'right' as const,
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
       render: (row: User) => (
         <span className="flex items-center justify-end gap-1.5">
           {canManage(row) || (canDelete && row.id !== currentUser?.id && (row.role?.name !== 'super_admin' || hasRole('super_admin'))) ? (
@@ -481,11 +628,24 @@ export default function UsersPage() {
           )}
         </span>
       ),
+<<<<<<< HEAD
+=======
+=======
+      render: (row: User) => <span className="flex items-center justify-end gap-1.5">
+        {canEdit && <button type="button" aria-label={`Edit ${row.name}`} onClick={() => setEditing(row)} className="inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border text-muted-foreground hover:bg-muted hover:text-foreground"><Pencil size={14} /></button>}
+        {canDelete && row.id !== currentUser?.id && <button type="button" aria-label={`Remove ${row.name}`} onClick={() => void remove(row)} className="inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border text-muted-foreground hover:border-destructive/40 hover:text-destructive"><Trash2 size={14} /></button>}
+      </span>,
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     }] : []),
   ]
 
   return (
     <div className="space-y-6">
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
       <PageHeader
         title="Users"
         subtitle="Every role can hold any number of accounts"
@@ -512,11 +672,22 @@ export default function UsersPage() {
         </div>
       </div>
 
+<<<<<<< HEAD
+=======
+=======
+      <PageHeader title="Users" subtitle="Staff accounts and access control" actions={canCreate ? <Button icon={<Plus size={16} />} onClick={() => setCreating(true)}>Add user</Button> : undefined} />
+      <SearchInput value={term} onChange={setTerm} onDebouncedChange={(value) => { setSearch(value); resetPage() }} placeholder="Search by name or email..." containerClassName="sm:max-w-sm" />
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
       <Table
         columns={columns}
         data={data?.data ?? []}
         loading={isLoading}
         rowKey={(row) => row.id}
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         empty={<EmptyState icon={<UserCog size={22} />} title="No users found" description={search || roleId || status ? 'Try clearing the filters.' : 'Create accounts for staff who need system access.'} action={<Can permission="users.create"><Button size="sm" onClick={() => setCreating(true)}>Add user</Button></Can>} />}
       />
       {data && <Pagination meta={data.meta} onPageChange={setPage} disabled={isFetching} />}
@@ -583,6 +754,16 @@ export default function UsersPage() {
           </p>
         )}
       </Modal>
+<<<<<<< HEAD
+=======
+=======
+        empty={<EmptyState icon={<UserCog size={22} />} title="No users found" description={search ? 'Try another name or email address.' : 'Create accounts for staff who need system access.'} action={canCreate ? <Button size="sm" onClick={() => setCreating(true)}>Add user</Button> : undefined} />}
+      />
+      {data && <Pagination meta={data.meta} onPageChange={setPage} disabled={isFetching} />}
+      <UserFormModal open={creating} user={null} onClose={() => setCreating(false)} />
+      <UserFormModal open={Boolean(editing)} user={editing} onClose={() => setEditing(null)} />
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     </div>
   )
 }

@@ -14,6 +14,10 @@ class Admission extends Model
         'status', 'discharged_at', 'discharged_by', 'discharge_summary', 'outcome'
     ];
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     /**
      * @return array<string, string>
      */
@@ -26,6 +30,11 @@ class Admission extends Model
         ];
     }
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
     public function patient(): BelongsTo
     {
         return $this->belongsTo(Patient::class);
@@ -50,6 +59,10 @@ class Admission extends Model
     {
         return $this->belongsTo(Doctor::class, 'consultant_id');
     }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
     public function admittedBy(): BelongsTo
     {
@@ -60,4 +73,9 @@ class Admission extends Model
     {
         return $this->belongsTo(User::class, 'discharged_by');
     }
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 }

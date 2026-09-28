@@ -5,10 +5,21 @@ namespace App\Http\Controllers\Lab;
 use App\Http\Controllers\Controller;
 use App\Http\Transformers\Transform;
 use App\Models\LabRequest;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 use App\Models\Visit;
 use App\Support\AuditLogger;
 use App\Support\GeneratesSequentialNumber;
 use App\Support\VisitWorkflow;
+<<<<<<< HEAD
+=======
+=======
+use App\Support\AuditLogger;
+use App\Support\GeneratesSequentialNumber;
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -38,10 +49,19 @@ class LabRequestController extends Controller
             $query->where('patient_id', (int) $request->query('patient_id'));
         }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         if ($request->filled('visit_id')) {
             $query->where('visit_id', (int) $request->query('visit_id'));
         }
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         if ($request->filled('date')) {
             $query->whereDate('requested_at', $request->query('date'));
         }
@@ -79,6 +99,10 @@ class LabRequestController extends Controller
 
         $doctorId = $validated['doctor_id'] ?? $request->user()?->doctor?->id;
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         // Smooth handoff guards: the lab order must belong to the same patient
         // as the case, and the case must be with the doctor (in consultation or
         // back from a previous lab round). This keeps Doctor -> Lab -> Doctor
@@ -111,6 +135,11 @@ class LabRequestController extends Controller
             }
         }
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         $labRequest = DB::transaction(function () use ($validated, $doctorId) {
             $labRequest = LabRequest::create([
                 'request_number' => $this->next('LAB', 'lab_requests', 'request_number'),
@@ -138,19 +167,38 @@ class LabRequestController extends Controller
 
         AuditLogger::log('create', "Lab request {$labRequest->request_number} created for {$patientName}", $labRequest);
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         VisitWorkflow::sendToLab(
             $labRequest->visit_id,
             $request->user(),
             "Lab request {$labRequest->request_number} created."
         );
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         return $this->ok($this->transform($labRequest));
     }
 
     public function show(Request $req, LabRequest $request): JsonResponse
     {
+<<<<<<< HEAD
         if ($denied = $this->denyOtherPatient($req, $request->patient_id)) {
             return $denied;
+=======
+<<<<<<< HEAD
+        if ($denied = $this->denyOtherPatient($req, $request->patient_id)) {
+            return $denied;
+=======
+        if ($this->isPatientPortal($req) && $req->user()->patient_id !== $request->patient_id) {
+            return response()->json(['message' => 'This action is unauthorized.'], 403);
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         }
 
         return $this->ok($this->transform($request));
@@ -168,6 +216,10 @@ class LabRequestController extends Controller
             $request->update(['status' => 'processing']);
             $request->results()->where('status', 'pending')->update(['status' => 'processing']);
         });
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         AuditLogger::log('update', "Lab request {$request->request_number} started", $request);
 
         VisitWorkflow::advanceVisit(
@@ -176,6 +228,13 @@ class LabRequestController extends Controller
             auth()->user(),
             "Lab request {$request->request_number} received by lab."
         );
+<<<<<<< HEAD
+=======
+=======
+
+        AuditLogger::log('update', "Lab request {$request->request_number} started", $request);
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
         return $this->ok($this->transform($request));
     }
@@ -251,6 +310,10 @@ class LabRequestController extends Controller
             );
         });
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         if ($request->fresh()->status === 'completed') {
             VisitWorkflow::advanceVisit(
                 $request->visit_id,
@@ -260,6 +323,11 @@ class LabRequestController extends Controller
             );
         }
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         return $this->ok($this->transform($request));
     }
 
@@ -281,6 +349,10 @@ class LabRequestController extends Controller
 
         AuditLogger::log('update', "Lab request {$request->request_number} cancelled", $request);
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         // Only unwind the case when it was still sitting in the lab stages;
         // a case that already moved on (prescription, payment, …) stays put.
         $visit = $request->visit_id ? Visit::find($request->visit_id) : null;
@@ -294,6 +366,11 @@ class LabRequestController extends Controller
             );
         }
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
         return $this->ok($this->transform($request));
     }
 
@@ -303,6 +380,10 @@ class LabRequestController extends Controller
 
         return Transform::labRequest($labRequest);
     }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 
     public function pdf(Request $request, LabRequest $labRequest)
     {
@@ -328,4 +409,9 @@ class LabRequestController extends Controller
 
         return $pdf->download($labRequest->request_number.'.pdf');
     }
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> bd5e876a8b6d8083d786a30260aa69f6332f42bf
+>>>>>>> a7f297beb91ac4e4e56de9342ae6be561e36276a
 }
